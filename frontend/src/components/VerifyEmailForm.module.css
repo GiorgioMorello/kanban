@@ -1,0 +1,58 @@
+.otp_form_container {
+    place-self: center;
+    width: 40rem;
+    max-height: 35rem;
+    background-color: var(--second_color);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.otp_form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+}
+
+.otp_form .form_title {
+    font-size: 1.5rem;
+}
+
+.otp_form .field_group input{
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #666;
+    margin: 1rem 0;
+}
+
+
+.resend_btn {
+    border: none;
+    border-radius: 5px;
+    align-self: center;
+    text-align: center;
+    color: #222;
+    padding: 0.5rem;
+    transition: 0.3s;
+}
+
+.btn {
+    width: 100%;
+    transition: 0.3s;
+}
+
+
+
+.btn_disabled {
+  background-color: var(--main_gray) !important;
+  color: #222 !important;
+  cursor: default !important;
+}
+
+
+.btn_active {
+  background-color: var(--primary_color);
+  color: var(--second_color);
+  cursor: pointer;
+}

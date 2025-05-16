@@ -1,0 +1,151 @@
+:root {
+    --primary_color: #222;
+    --second_color: #fff;
+    --default_red: indianred;
+    --main_gray: #ddd;
+    --main_bg: #EEE5E9
+
+}
+
+
+* {
+
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+html {
+  font-size: 62.5%;
+}
+
+
+
+body {
+  font-size: 1.6rem;
+  font-family: "Poppins", sans-serif;
+}
+
+
+
+
+a {
+    display: block;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+
+ul, li {
+  list-style-type: none;
+}
+
+
+.wrapper {
+    max-width: 110rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.2rem;
+}
+
+
+.active {
+    background-color: var(--second_color);
+    color: var(--primary_color)!important;
+}
+
+
+.error_msg {
+    color: var(--default_red);
+    font-size: 1.3rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    display: block;
+}
+
+.success_msg {
+    color: seagreen;
+    font-size: 1.3rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    display: block;
+}
+
+.form_title {
+    padding: 1.5rem 0;
+}
+
+
+.small_toast {
+    font-size: 14px; /* Reduz o tamanho da fonte */
+    padding: 10px; /* Reduz o preenchimento interno */
+    width: 450px; /* Define uma largura menor */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    border-radius: 8px; /* Bordas arredondadas */
+    margin: 0;
+}
+
+
+/* TASK FORM */
+
+.task_text input, .task_text textarea, .task_date input{
+    padding: 0.5rem;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.task_text input:focus, .task_text textarea:focus, .task_date input:focus {
+    outline: 1px solid #222222;
+
+}
+
+
+.form_btns  {
+    text-align: right;
+    height: 50px;
+}
+
+.form_btns button {
+    background-color: transparent;
+    border: none;
+    font-size: 2.8rem;
+    cursor: pointer;
+    transition: 0.1s;
+    height: 30px;
+
+}
+
+.form_btns button + button {
+    margin-left: 1rem;
+}
+
+.form_btns button:hover {
+    background-color: #ddd;
+}
+
+.submit_btn {
+    background-color: var(--primary_color);
+    border: none;
+    border-radius: 5px;
+    width: 10rem;
+    color: var(--second_color);
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+
+.bg_view {
+    background-color: var(--main_bg);
+}
+

@@ -1,0 +1,14 @@
+
+.board_container {
+    background-color: #F9FFFF;
+    height: calc(100vh - 10rem);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.title {
+    padding: 2rem 0;
+}
+
+
+

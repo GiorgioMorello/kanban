@@ -1,0 +1,7 @@
+.verify_email_container {
+    width: 100vw;
+    height: calc(100vh - 74px);
+    background-color: var(--main_bg);
+
+    display: grid
+}

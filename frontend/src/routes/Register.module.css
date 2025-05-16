@@ -1,0 +1,84 @@
+
+
+.register_container {
+    min-height: calc(100vh - 74px);
+    width: 100vw;
+    background-color: var(--main_bg);
+    display: grid;
+
+}
+
+.form_container {
+
+    place-self: center;
+
+    padding-right: 2rem;
+    background-color: var(--second_color);
+    max-width: 80rem;
+    max-height: 60rem;
+    width: 100%;
+    border-radius: 10px 10px 10px 10px;
+    height: 100%;
+}
+
+
+
+
+
+.img_side_form {
+    width: 100%;
+    display: flex;
+    gap: 0.8rem;
+    height: 100%;
+
+}
+
+.side_img {
+    flex-basis: 350px;
+    background-image: url("/register_task_bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px 0 0 10px;
+
+}
+
+.register_form {
+    padding: 2rem;
+    flex-basis: 400px;
+
+
+}
+
+
+.register_form p {
+    font-weight: 500;
+}
+
+
+
+.field_group {
+    margin: 1.5rem 0;
+    width: 100%;
+}
+
+.field_group label input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #666;
+
+}
+
+
+
+
+.useful_links {
+    padding-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: lighter;
+}
+
+.useful_links a {
+    display: inline-block;
+}

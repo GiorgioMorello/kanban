@@ -1,0 +1,130 @@
+
+.kanban_board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-template-rows: 1fr;
+    grid-gap: 1rem;
+    grid-auto-columns: 150px;
+    height: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+
+}
+
+
+.status {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.kanban_board p {
+}
+
+.status_title {
+    margin-bottom: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+    position: relative;
+}
+.status_title .add_btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 2rem;
+
+}
+
+.add_btn button{
+    background-color: transparent;
+    border: none;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    cursor: pointer;
+
+}
+
+
+.status:nth-child(1)  .status_title{
+    background-color: #FAA0A0;
+}
+
+.status:nth-child(2)  .status_title{
+    background-color: #FCF55F ;
+}
+
+.status:nth-child(3)  .status_title{
+    background-color: #9FE2BF ;
+}
+
+.tasks_container {
+    height: calc(100% - 35px);
+    background-color: #F5F7FF;
+    padding: 0.5rem;
+    overflow-y: auto;
+    max-height: calc(100% - 70px);
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+
+
+@media screen and (max-width: 970px) {
+
+    .kanban_board {
+        grid-template-rows: repeat(3, 100%);
+        grid-template-columns: repeat(2, 1fr); /* duas colunas iguais */
+    }
+
+
+
+    .kanban_board > div:last-child { /* Ultima task board irá ocupar 100% do container */
+        grid-column: 1 / -1;
+  }
+
+}
+
+
+@media screen and (max-width: 745px) {
+
+    .kanban_board{
+        grid-template-columns: 1fr; /* tudo em uma coluna só */
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* SCROLLBAR */
+/* width */
+.tasks_container::-webkit-scrollbar {
+    width: 0.5rem;
+    border-radius: 15px;
+}
+
+/* Track */
+.tasks_container::-webkit-scrollbar-track {
+  background: var(--second_color);
+}
+
+/* Handle */
+.tasks_container::-webkit-scrollbar-thumb {
+  background: var(--main_gray);
+}
+
+/* Handle on hover */
+.tasks_container::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}

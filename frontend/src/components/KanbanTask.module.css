@@ -1,0 +1,137 @@
+.task {
+    max-width: 30rem;
+    margin: 0 auto;
+    width: 100%;
+    /*border-left: 4px solid var(--default_red);*/
+    padding: 0 0.5rem;
+}
+
+
+
+
+
+.task_text {
+    padding-bottom: 1.5rem;
+}
+
+
+
+.task_text h3{
+    padding-bottom: 0.5rem;
+}
+
+
+
+.task_owner_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.task_date {
+    font-size: 1.1rem;
+    font-weight: lighter;
+    color: #999
+}
+
+
+.task_owner_info div {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem;
+    border: 2px solid var(--main_gray);
+    border-radius: 5px;
+    gap: 0.5rem;
+    font-size: 1.5rem
+}
+
+.task_owner_info div img {
+    height: 2.5rem;
+    border-radius: 50%;
+}
+
+.task {
+    position: relative;
+}
+
+.config {
+    position: absolute;
+    top: 0;
+    right: -20px;
+    height: 23px;
+    transition: 0.3s;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.config i {
+    font-size: 2.1rem;
+    padding: 0.1rem;
+}
+
+.config:hover{
+    background-color: #D3D3D3;
+}
+
+
+
+.config_container {
+    position: absolute;
+    z-index: 99;
+    right: 0;
+    top: 25px;
+    background-color: #282828;
+    width: 200px;
+    padding: 0.8rem 0;
+    border-radius: 7px;
+}
+
+.config_btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+}
+
+
+.config_btns .config_btn {
+    border: none;
+    padding: 0.3rem;
+    background-color: transparent;
+    color: var(--second_color);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    transition: 0.1s;
+    padding-left: 0.8rem;
+    font-size: 1.65rem;
+    cursor: pointer;
+}
+
+.config_btns .config_btn:hover{
+    background-color: var(--main_gray);
+    color: var(--primary_color)
+}
+
+/* Selecionando todos as tasks que não é a ultima */
+.task:not(:last-child) .line {
+    position: absolute;
+    bottom: -6%;
+    width: 100%;
+    height: 1px;
+    background-color: var(--main_gray);
+}
+
+
+/* EDIT form */
+.check_btn {
+    color: #ddd;
+    cursor: auto!important;
+}
+
+.check_btn:hover {
+    background-color: transparent!important;
+}
