@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://django-api.vps-kinghost.net/', 'http://django-api.vps-kinghost.net/', 'django-api.vps-kinghost.net/']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-api.vps-kinghost.net',]
 
 
 # Application definition
@@ -216,21 +216,27 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
+    'https://django-api.vps-kinghost.net',
+    'http://django-api.vps-kinghost.net',
 ]
 
 
 CORS_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://localhost:5173',
-    'http://127.0.0.1:8000'
-    'http://127.0.0.1:5173/'
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:5173/',
+    'https://django-api.vps-kinghost.net/',
+    'http://django-api.vps-kinghost.net',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1:8000',
     'http://localhost:5173',
-    'http://127.0.0.1:5173'
+    'http://127.0.0.1:5173',
+    'https://django-api.vps-kinghost.net',
+    'http://django-api.vps-kinghost.net',
 ]
 
 
