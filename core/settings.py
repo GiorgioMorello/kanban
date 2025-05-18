@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://django-api.vps-kinghost.net/', 'http://django-api.vps-kinghost.net/']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://django-api.vps-kinghost.net/', 'http://django-api.vps-kinghost.net/', 'django-api.vps-kinghost.net/']
 
 
 # Application definition
