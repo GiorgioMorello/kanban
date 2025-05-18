@@ -137,6 +137,7 @@ DOMAIN_NAME = 'http://127.0.0.1:8000'
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = "static/"
 
 
 MEDIA_ROOT = BASE_DIR / 'media'
