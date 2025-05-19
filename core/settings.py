@@ -217,7 +217,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
-    "https://kanban-tasks-project.netlify.app"
+    "https://kanban-task-project.netlify.app"
 
 ]
 
@@ -226,14 +226,14 @@ CORS_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    'https://kanban-tasks-project.netlify.app',
+    'https://kanban-task-project.netlify.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    'https://kanban-tasks-project.netlify.app',
+    'https://kanban-task-project.netlify.app',
 ]
 
 
