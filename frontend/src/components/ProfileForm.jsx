@@ -1,7 +1,6 @@
 /* Hooks */
 import React, {useContext, useState, useEffect, useRef} from 'react';
 import {jwtDecode} from "jwt-decode";
-import useAxios from "../utils/useAxios.jsx";
 import {useNavigate} from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate.jsx";
 
@@ -50,7 +49,6 @@ export default function ProfileForm(){
 
 
     useEffect(()=>{
-        // Caso o usuário tenha alterado a imagem de perfil, mostrar botão de remover imagem
         if(!accessToken || !user){
             navigate('/login')
         }
@@ -92,7 +90,6 @@ export default function ProfileForm(){
 
         if (resp.status === 200){
             const data = resp.data;
-            // localStorage.setItem("auth_token", JSON.stringify(token));
             setUser(jwtDecode(data.access));
             setAccessToken(data.access)
             setProfilePic(data.profile_pic);

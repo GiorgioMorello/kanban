@@ -4,9 +4,8 @@ import {createContext, useState, useEffect, useContext} from 'react';
 import {AuthContext} from "./AuthContext.jsx";
 
 // Utils
-import Swal from "sweetalert2";
-import useAxios from "../utils/useAxios.jsx";
 import useAxiosPrivate from "../hooks/useAxiosPrivate.jsx";
+import Alert from "../utils/Alert.jsx";
 
 export const TaskContext = createContext();
 
@@ -23,6 +22,7 @@ export function TaskProvider({children}) {
 
     // Utils
     const api = axios_private_instance;
+    const send_alert = Alert();
 
 
 
@@ -49,20 +49,7 @@ export function TaskProvider({children}) {
                 }
 
                 if(user.user_id === null){
-                    await Swal.fire({
-                        title: "Sua sessão expirou, faça login novamente",
-                        icon: "error",
-                        toast: true,
-                        timer: 4000,
-                        position: "top-right",
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        grow: false,
-                        heightAuto: false,
-                        customClass: {
-                            popup: 'small_toast'
-                        }
-                    });
+                    await send_alert("Sua sessão expirou, faça login novamente", "error")
                 }
 
             }

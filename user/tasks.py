@@ -1,7 +1,10 @@
 from celery import shared_task
 from django.core.mail import send_mail
 from django.conf import settings
+from decouple import config
 
+
+CLIENT_SIDE_DOMAIN = config('CLIENT_SIDE_DOMAIN')
 
 @shared_task
 def send_otp_to_user(token, user_email, first_name, url_token):
@@ -15,7 +18,7 @@ def send_otp_to_user(token, user_email, first_name, url_token):
         ⚠️ Este código expira em **5 minutos**.
         
         Para concluir a verificação, acesse o link abaixo:
-        {settings.DOMAIN_NAME}/verify-email/{url_token}
+        {CLIENT_SIDE_DOMAIN}/verify-email/{url_token}
         
         Se você não solicitou essa verificação, por favor ignore este e-mail.
     """

@@ -37,16 +37,6 @@ export function AuthProvider({children}){
 
 
 
-
-    let context_data = {
-        user, setUser,
-        accessToken, setAccessToken,
-        refreshToken, setRefreshToken,
-        csrftoken, setCsrfToken
-    }
-
-
-
     return (
         <AuthContext.Provider value={contextValue}>
             {children}

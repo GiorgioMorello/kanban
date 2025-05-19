@@ -211,7 +211,7 @@ def login_view(request):
         return resp
 
 
-    return Response({'test': "test"}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"detail": "Usuário não ativo"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
-
+# TODO: Alterar debug
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
@@ -131,7 +131,7 @@ USE_TZ = True
 
 
 
-DOMAIN_NAME = 'http://127.0.0.1:8000'
+DOMAIN_NAME = config('DOMAIN_NAME')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -217,27 +217,23 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
-    'https://django-api.vps-kinghost.net',
-    'http://django-api.vps-kinghost.net',
+    "https://kanban-tasks-project.netlify.app"
+
 ]
 
 
 CORS_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://localhost:5173',
-    'http://127.0.0.1:8000',
-    'http://127.0.0.1:5173/',
-    'https://django-api.vps-kinghost.net/',
-    'http://django-api.vps-kinghost.net',
+    'http://127.0.0.1:5173',
+    'https://kanban-tasks-project.netlify.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
-    'http://127.0.0.1:8000',
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    'https://django-api.vps-kinghost.net',
-    'http://django-api.vps-kinghost.net',
+    'https://kanban-tasks-project.netlify.app',
 ]
 
 
