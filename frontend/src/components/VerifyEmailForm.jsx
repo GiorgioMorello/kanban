@@ -18,7 +18,7 @@ import {AuthContext} from "../context/AuthContext.jsx";
 import {axios_instance} from "../axios/Index.jsx";
 
 
-export default function VerifyEmail({set_error, errors, url_code}) {
+export default function VerifyEmailForm({set_error, errors, url_code}) {
 
     const [is_timer_end, setIsTimerEnd] = useState(false);
     const [timer_display, setTimerDisplay] = useState("5:00");
@@ -34,8 +34,6 @@ export default function VerifyEmail({set_error, errors, url_code}) {
 
     const submit_ref = useRef(null);
 
-
-    const baseURL = 'http://127.0.0.1:8000/';
 
 
      // Caso o usuário não tenha inserido o código de confirmação, o input submit será bloqueado
@@ -60,7 +58,7 @@ export default function VerifyEmail({set_error, errors, url_code}) {
 
         try {
 
-            const resp = await axios_instance.post(`${baseURL}user/otp-verification/`,
+            const resp = await axios_instance.post(`user/otp-verification/`,
                     {url_code, otp_code: user_otp}
             );
 
@@ -79,18 +77,12 @@ export default function VerifyEmail({set_error, errors, url_code}) {
                 navigate("/dashboard")
 
             }
-            else {
-                if(data.detail === 'True'){
-                    set_error("Código inválido");
-                    return
-                }
-                set_error(data)
 
-            }
 
         }
         catch (e) {
             console.log(e);
+            set_error(e.response.data);
         }
 
 
@@ -110,18 +102,11 @@ export default function VerifyEmail({set_error, errors, url_code}) {
 
         try {
 
-            const resp = await fetch(`${baseURL}user/otp-verification/`,
-                {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({url_code, otp_code: user_otp})
-                })
+            const resp = await axios_instance.patch(`user/otp-verification/`, {url_code, otp_code: user_otp})
 
-            const data = await resp.json();
+            const data = resp.data;
 
-            if(resp.ok) {
+            if(resp.status === 200) {
                 console.log(data)
                 setSuccessMsg(data);
 

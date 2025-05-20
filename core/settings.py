@@ -235,7 +235,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:5173',
     'https://kanban-task-project.netlify.app',
 ]
-
+# TODO: Configurar CELERY
 
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_HTTP_ONLY = True
@@ -273,7 +273,7 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 EMAIL_USE_SSL = config('EMAIL_USE_SSL')
 
 

@@ -11,12 +11,12 @@ import VerifyEmailForm from "../components/VerifyEmailForm.jsx";
 import styles from './VerifyEmail.module.css'
 import Swal from "sweetalert2";
 import {AuthContext} from "../context/AuthContext.jsx";
+import {axios_instance} from "../axios/Index.jsx";
 
 
 export default function VerifyEmail() {
 
     const url_code = useParams().url_code;
-    const baseURL = 'http://127.0.0.1:8000/';
     const navigate = useNavigate()
     const {user} = useContext(AuthContext);
     const [should_render, setShouldRender] = useState(false)
@@ -37,58 +37,24 @@ export default function VerifyEmail() {
         async function verify_url() {
             try {
 
-                const resp = await fetch(`${baseURL}user/otp-verification/?url_code=${url_code}`, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+                const resp = await axios_instance.get(`user/otp-verification/?url_code=${url_code}`);
 
-                const data = await resp.json();
+                const data = resp.data;
 
-                if (resp.ok) {
+                if (resp.status === 200) {
                     console.log(data);
-
-
-                } else {
-                    console.log(data);
-                    if(data.detail){
-                        setError(data.detail);
-                    } else {
-                        setError(data.Error)
-                    }
-
-
-                    if (data.detail === 'True') {
-                        localStorage.removeItem("is_timer_end")
-                        localStorage.removeItem("otp_timer");
-                        navigate("/login");
-
-                        Swal.fire({
-                            title: "E-mail já confirmado ou Código invalido",
-                            icon: "error",
-                            toast: true,
-                            timer: 4000,
-                            position: "top-right",
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            grow: false,
-                            heightAuto: false,
-                            customClass: {
-                                popup: 'small_toast'
-                            }
-                        })
-
-                    }
-
-
-
 
                 }
 
+
             } catch (e) {
-                console.log(e)
-                setError(e.message);
+                const resp = e.response;
+                if(resp.data.auth){
+                        setError(resp.data.auth);
+                }
+                else {
+                        setError(resp.data)
+                    }
 
             }
 
