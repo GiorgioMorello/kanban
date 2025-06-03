@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 
 export default function NavBar(){
 
-    const {accessToken, setAccessToken, setUser, setCsrfToken } = useAuthContext();
+    const {setWasLoggedOut, accessToken, setAccessToken, setUser, setCsrfToken } = useAuthContext();
     const navigate  = useNavigate();
     const axios_private_instance = useAxiosPrivate();
 
@@ -20,16 +20,17 @@ export default function NavBar(){
         //var user_id = decoded.user_id;
     }
 
-    async function logout_user() {
-        const resp = await axios_private_instance.post('user/logout/');
-        if(resp.status === 204){
-            setCsrfToken(null);
-            setAccessToken(null);
-            setUser(null);
+        async function logout_user() {
+            const resp = await axios_private_instance.post('user/logout/');
+            if(resp.status === 204){
+                setWasLoggedOut(true)
+                setCsrfToken(null);
+                setAccessToken(null);
+                setUser(null);
 
-            navigate('/login');
+                navigate('/login');
+            }
         }
-    }
 
 
     return (

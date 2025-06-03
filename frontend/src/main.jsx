@@ -9,11 +9,11 @@ import PrivateRoute from './utils/PrivateRoute.jsx'
 
 // Routes
 import Home from './routes/Home.jsx'
-import LoginPage from './routes/LoginPage.jsx'
-import RegisterPage from './routes/RegisterPage.jsx'
-import Dashboard from './routes/Dashboard.jsx'
+import LoginPage from './routes/login_and_register_form/LoginPage.jsx'
+import RegisterPage from './routes/login_and_register_form/RegisterPage.jsx'
+import Dashboard from './routes/dashboard_page/Dashboard.jsx'
 import Profile from './routes/Profile.jsx'
-import VerifyEmail from "./routes/VerifyEmail.jsx";
+import VerifyEmail from "./routes/verify_email_page/VerifyEmail.jsx";
 
 
 

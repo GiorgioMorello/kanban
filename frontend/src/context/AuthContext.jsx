@@ -1,5 +1,4 @@
 import {createContext, useState, useEffect, useContext, useMemo} from 'react';
-import {axios_instance} from "../axios/Index.jsx";
 import useRefreshToken from "../hooks/useRefreshToken.jsx";
 
 
@@ -11,7 +10,9 @@ export const AuthContext = createContext({
     refreshToken: {},
     setRefreshToken: ()=>{},
     csrftoken: null,
-    setCsrfToken: ()=>{}
+    setCsrfToken: ()=>{},
+    wasLoggedOut: null,
+    setWasLoggedOut: ()=>{}
 
 });
 
@@ -24,13 +25,14 @@ export function AuthProvider({children}){
     const [accessToken, setAccessToken] = useState();
     const [refreshToken, setRefreshToken] = useState();
     const [csrftoken, setCsrfToken] = useState();
-    const [authInitialized, setAuthInitialized] = useState();
+    const [wasLoggedOut, setWasLoggedOut] = useState();
 
     const contextValue = useMemo(() => ({
         user, setUser,
         accessToken, setAccessToken,
         refreshToken, setRefreshToken,
-        csrftoken, setCsrfToken
+        csrftoken, setCsrfToken,
+        wasLoggedOut, setWasLoggedOut,
     }), [user, accessToken, refreshToken, csrftoken]); // Só recria quando estas dependências mudam
 
 

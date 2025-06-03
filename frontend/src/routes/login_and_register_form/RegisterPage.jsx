@@ -4,16 +4,16 @@ import {useLocation} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 
 // Components
-import Input from '../components/Input.jsx'
+import Input from '../../components/Input.jsx'
 import {Link} from 'react-router-dom'
 
 // Context
-import {AuthContext} from "../context/AuthContext.jsx";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 
-import styles from './Register.module.css'
-import {axios_instance} from "../axios/Index.jsx";
-import Swal from "sweetalert2";
+import styles from './auth_form.module.css'
+import {axios_instance} from "../../axios/Index.jsx";
+import Alert from '../../utils/Alert.jsx'
 
 
 export default function RegisterPage() {
@@ -57,26 +57,25 @@ export default function RegisterPage() {
             const resp = await axios_instance.post("user/register/", {username, email, password, password_2});
             if (resp.status === 201) {
 
-
                 setEmail("");
                 setPassword("");
-                console.log(resp.data.url_code)
                 navigate(`/verify-email/${resp.data.url_code}`);
-                send_alert("Foi enviado um código para seu e-mail", "success")
+                const send_alert = Alert();
+                send_alert("Foi enviado um código para seu e-mail", "success");
 
             }
         } catch (e) {
 
             const resp = e.response;
-            console.log(resp)
+            console.log(resp);
 
             if (resp) {
                 setError(resp.data);
             }
         }
-
-
-        setDisableSubmit(false)
+        finally {
+            setDisableSubmit(false)
+        }
 
 
     }
@@ -98,19 +97,26 @@ export default function RegisterPage() {
                     <div className={styles.side_img}>
                     </div>
 
-                    <form onSubmit={handle_submit} className={styles.register_form}>
+                    <form data-testid={'register_form'} onSubmit={handle_submit} className={styles.register_form}>
                         <div className='form_title'>
-                            <h2>Bem vindo ao HelpTask</h2>
+                            <h2 data-testid={'register_page_title'} >Bem vindo ao HelpTask</h2>
                             <p>Criar conta</p>
                         </div>
 
                         <div className={styles.field_group}>
+
+
+
+
                             {error.username && <span className='error_msg'>{error.username}</span>}
                             <Input name='username' type='text' required={true} label_text='Nome de usuário'
                                    placeholder='Digite seu nome de usuário' handle_on_change={handle_username}/>
                         </div>
 
+
                         <div className={styles.field_group}>
+
+
                             {error.email && <span className='error_msg'>{error.email}</span>}
                             <Input name='email' type='email' required={true} label_text='E-mail'
                                    placeholder='Digite seu E-mail' handle_on_change={handle_email}/>
@@ -129,7 +135,7 @@ export default function RegisterPage() {
                         </div>
 
 
-                        <input disabled={disable_submit} className='submit_btn' type='submit' value='Enviar'/>
+                        <input data-testid={'register_form_submit_btn'} disabled={disable_submit} className='submit_btn' type='submit' value='Enviar'/>
 
 
 

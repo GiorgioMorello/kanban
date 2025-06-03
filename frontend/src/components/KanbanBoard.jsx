@@ -1,12 +1,11 @@
 import React, {useContext, useState, useEffect, useRef} from 'react';
 
-import styles from "./KanbanBoard.module.css";
+import styles from "./tasks/KanbanBoard.module.css";
 
 
 // Components
-import KanbanTask from './KanbanTask.jsx'
-import Input from "./Input";
-import TaskForm from './TaskForm.jsx'
+import KanbanTask from './tasks/KanbanTask.jsx'
+import TaskForm from './tasks/TaskForm.jsx'
 
 
 // Context
@@ -30,7 +29,7 @@ export default function KanbanBoard(){
 
 
 
-    const {is_tasks_changed, todo_tasks, doing_tasks, done_tasks} = useTaskContext()
+    const { todo_tasks, doing_tasks, done_tasks} = useTaskContext()
 
 
 

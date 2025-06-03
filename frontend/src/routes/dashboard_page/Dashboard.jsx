@@ -3,11 +3,11 @@ import React, {useContext, useState, useEffect} from 'react';
 import {jwtDecode} from "jwt-decode";
 
 // Contexts
-import {useTaskContext} from "../context/TaskContext.jsx";
+import {useTaskContext} from "../../context/TaskContext.jsx";
 
 // Compontents
 import styles from './Dashboard.module.css';
-import KanbanBoard from "../components/KanbanBoard.jsx";
+import KanbanBoard from "../../components/KanbanBoard.jsx";
 
 
 

@@ -20,13 +20,20 @@ import {axios_instance} from "../axios/Index.jsx";
 
 export default function VerifyEmailForm({set_error, errors, url_code}) {
 
-    const [is_timer_end, setIsTimerEnd] = useState(false);
+    function get_is_timer_end_from_local_storage(){
+        return localStorage.getItem("is_timer_end") === "true";
+    }
+
+    const [is_timer_end, setIsTimerEnd] = useState(get_is_timer_end_from_local_storage())
     const [timer_display, setTimerDisplay] = useState("5:00");
     const [user_otp, setUserOtp] = useState("");
     const [is_otp_filled, setIsOtpFilled] = useState(false);
     const {setUser, user, setAccessToken, setRefreshToken} = useContext(AuthContext);
     const [success_msg, setSuccessMsg] = useState("");
     const send_alert = Alert();
+
+
+
 
 
 
@@ -38,11 +45,14 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
 
      // Caso o usuário não tenha inserido o código de confirmação, o input submit será bloqueado
     useEffect(()=>{
+        console.log(is_timer_end)
         setIsOtpFilled(user_otp.length > 1);
 
         if (submit_ref && user_otp.length > 1){
             submit_ref.current.disable = false
         }
+
+
 
     }, [user_otp]);
 
@@ -65,16 +75,19 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
             console.log(resp.status)
 
             if (resp.status === 200){
-                setIsTimerEnd(true);
+                localStorage.removeItem("otp_timer");
+                localStorage.removeItem("is_timer_end");
+
+
+                setIsTimerEnd(false)
                 setAccessToken(resp.data.access);
                 setUser(jwtDecode(resp.data.access));
-                console.log("FOI")
-                localStorage.removeItem("otp_timer");
-
-                send_alert("Conta criada com sucesso", "success")
-
 
                 navigate("/dashboard")
+                send_alert("Conta criada com sucesso", "success");
+
+                console.log(localStorage.getItem('is_timer_end'))
+
 
             }
 
@@ -89,13 +102,16 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
 
 
 
+
+
     }
 
 
     async function resend_otp_code(e){
         e.preventDefault();
-        localStorage.setItem("is_timer_end", false)
         localStorage.removeItem("otp_timer");
+        localStorage.setItem("is_timer_end", 'false');
+
         setIsTimerEnd(false);
         set_error(null);
         setSuccessMsg(null)
@@ -137,7 +153,7 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
                     <span className='success_msg'>{success_msg}</span>
                 )}
 
-            <Timer setTimerDisplay={setTimerDisplay} setIsTimerEnd={setIsTimerEnd} is_timer_end={is_timer_end} />
+            <Timer setTimerDisplay={setTimerDisplay} is_timer_end={is_timer_end} set_is_timer_end={setIsTimerEnd}/>
 
             <form onSubmit={handle_submit} className={styles.otp_form}>
                 <div className={'form_title'}>

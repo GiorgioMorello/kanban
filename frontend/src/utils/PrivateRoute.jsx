@@ -1,6 +1,6 @@
-    import {Route, Navigate, Routes} from "react-router-dom";
+import {Route, Navigate, Routes} from "react-router-dom";
 import {AuthContext} from '../context/AuthContext.jsx';
-import {useContext} from "react";
+import {useContext, useRef} from "react";
 import useRefreshToken from "../hooks/useRefreshToken.jsx";
 import {useState, useEffect} from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate.jsx";
@@ -10,12 +10,14 @@ import Alert from "./Alert.jsx";
 
 
 export default function PrivateRoute({ children }){
-    const {user, accessToken, setUser} = useContext(AuthContext);
+    const {user, accessToken, setUser, setWasLoggedOut, wasLoggedOut} = useContext(AuthContext);
 
     const refresh = useRefreshToken()
     const [loading, setLoading] = useState(true)
     const axios_private_instance = useAxiosPrivate();
     const send_alert = Alert();
+
+
 
     useEffect(() => {
         let isMounted = true
@@ -46,12 +48,23 @@ export default function PrivateRoute({ children }){
         }
     }, [])
 
+
+
+
     if(loading){
         return <p>Loading</p>
     }
 
+    //Caso usuário faça Loggout
+    if(!loading && wasLoggedOut){
+        setWasLoggedOut(false)
+        return <Navigate to={'/login'} />
+    }
+
     if(!loading && (!accessToken || !user)) {
+
         send_alert("Faça login para visualizar essa página", "error");
+
         return <Navigate to={'/login'} />
     }
     else if(!loading){

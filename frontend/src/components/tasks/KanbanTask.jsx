@@ -1,20 +1,20 @@
 import React, {useContext, useRef, useState, useEffect} from 'react';
-import useAxiosPrivate from "../hooks/useAxiosPrivate.jsx";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 // Styles
 import styles from './KanbanTask.module.css';
 
 // Contexts
-import {useAuthContext} from "../context/AuthContext.jsx";
-import {useTaskContext} from "../context/TaskContext.jsx";
+import {useAuthContext} from "../../context/AuthContext.jsx";
+import {useTaskContext} from "../../context/TaskContext.jsx";
 
 // Components
-import Input from "./Input.jsx";
-import ChangeStatusBtn from "./ChangeStatusBtn.jsx";
+import Input from "../Input.jsx";
+import ChangeStatusBtn from "../ChangeStatusBtn.jsx";
 
 
 // Utils
-import TaskUtils from "../utils/TaskUtils.jsx";
+import TaskUtils from "../../utils/TaskUtils.jsx";
 
 
 export default function KanbanTask({props, status_color}) {

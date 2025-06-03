@@ -16,7 +16,6 @@ export default function TaskUtils(){
 
 
         if (!is_editing && date < current_date){
-            console.log(is_editing)
             post_errors.push('Selecione uma data válida');
 
         } else {

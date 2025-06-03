@@ -32,7 +32,7 @@ export function TaskProvider({children}) {
             if (!user?.user_id) return;
 
             try {
-                console.log(user)
+                //console.log(user)
                 const resp = await api.get(`api/class/task?user_id=${user && user.user_id}`);
                 //console.log(resp);
 

@@ -1,25 +1,22 @@
 import React, {useState, useContext, useEffect} from 'react';
-import Input from '../components/Input.jsx';
-import styles from './Register.module.css';
+import Input from '../../components/Input.jsx';
+import styles from './auth_form.module.css';
 import {Link, useNavigate} from 'react-router-dom';
-import {AuthContext} from "../context/AuthContext.jsx";
-import {axios_instance} from "../axios/Index.jsx";
+import {AuthContext} from "../../context/AuthContext.jsx";
+import {axios_instance} from "../../axios/Index.jsx";
 import {jwtDecode} from "jwt-decode";
-import Alert from "../utils/Alert.jsx";
+import Alert from "../../utils/Alert.jsx";
 
 export default function LoginPage() {
 
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {setAccessToken, setUser, setCsrfToken, accessToken, user} = useContext(AuthContext);
-    // const [status_error, setStatusError] = useState("");
     const [error, setError] = useState("");
-    const send_alert = Alert();
+    const [disable_submit, setDisableSubmit] = useState(false);
+
 
     const navigate = useNavigate()
-    //const [login_cookies, _, remove_cookie] = useCookies('login_data')
-    const http_errors = [400, 401, 402, 403, 404]
 
 
     function handle_email(e) {
@@ -33,19 +30,25 @@ export default function LoginPage() {
 
     async function handle_submit(e) {
         e.preventDefault();
+        setDisableSubmit(true);
 
         try {
             const resp = await axios_instance.post("user/login/", {email, password});
             if (resp.status === 200) {
+
                 setAccessToken(resp.data.access);
                 setUser(jwtDecode(resp.data.access));
                 setCsrfToken(resp.headers['x-csrftoken']);
 
                 setEmail("");
+
+
                 setPassword("");
 
+
                 navigate('/dashboard');
-                send_alert("Login feito com sucesso", "success")
+                const send_alert = Alert();
+                send_alert("Login feito com sucesso", "success");
 
             }
         }
@@ -55,12 +58,16 @@ export default function LoginPage() {
 
             if(resp) {
                 setError(resp.data.detail);
-                console.log(resp.data.detail)
+                // console.log(resp.data.detail)
             }
         }
 
+        finally {
+            setDisableSubmit(false)
+        }
 
-        //remove_cookie('login_data')
+
+
     }
 
 
@@ -84,10 +91,10 @@ export default function LoginPage() {
                     <div className={styles.side_img}>
                     </div>
 
-                    <form onSubmit={handle_submit} className={styles.register_form}>
+                    <form data-testid={'login_form'} onSubmit={handle_submit} className={styles.register_form}>
                         <div className='form_title'>
-                            <h2>Faça log-in para entrar</h2>
-                            <p>Seja bem vindo {username}</p>
+                            <h2 data-testid={'login_page_title'}>Faça log-in para entrar</h2>
+                            <p>Seja bem vindo</p>
                         </div>
 
 
@@ -104,7 +111,7 @@ export default function LoginPage() {
                         {error && <span className='error_msg'>{error}</span>}
 
 
-                        <input className='submit_btn' type='submit' value='Enviar'/>
+                        <input disabled={disable_submit} data-testid={'login_form_submit_btn'} className='submit_btn' type='submit' value='Enviar'/>
 
                         <div className={styles.useful_links}>
                             <span>Não possui uma conta? Crie </span><Link to='/register'> aqui</Link>

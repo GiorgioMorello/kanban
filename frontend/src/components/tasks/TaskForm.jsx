@@ -1,16 +1,17 @@
 import styles from "./TaskForm.module.css";
-import Input from "./Input.jsx";
+import Input from "../Input.jsx";
 
 // Hooks
 import React, {useEffect, useState, useRef, useContext} from "react";
 
 // Utils
-import useAxiosPrivate from "../hooks/useAxiosPrivate.jsx";
-import TaskUtils from "../utils/TaskUtils.jsx";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
+import TaskUtils from "../../utils/TaskUtils.jsx";
+
 
 // Contexts
-import {useAuthContext} from '../context/AuthContext.jsx'
-import {useTaskContext} from '../context/TaskContext.jsx'
+import {useAuthContext} from '../../context/AuthContext.jsx'
+import {useTaskContext} from '../../context/TaskContext.jsx'
 
 
 export default function TaskForm({open_task_form, is_open_btn, status_color, task_status}) {
@@ -54,7 +55,6 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
 
 
         if (!is_valid) return false
-
 
 
         const task_data = {
@@ -150,3 +150,5 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
         </>
     )
 }
+
+

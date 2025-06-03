@@ -1,4 +1,4 @@
-import styles from "./TaskForm.module.css";
+import styles from "./tasks/TaskForm.module.css";
 import Input from "./Input.jsx";
 
 // Hooks

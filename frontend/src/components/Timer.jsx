@@ -19,6 +19,8 @@ export default function Timer(props) {
 
 
 
+
+
     function create_timer() {
         const DURATION = 5 * 60 * 1000
 
@@ -28,6 +30,7 @@ export default function Timer(props) {
         if (!exp_timer) {
             exp_timer = Date.now() + DURATION
             localStorage.setItem("otp_timer", exp_timer);
+            localStorage.setItem("is_timer_end", 'false')
         } else {
             exp_timer = parseInt(exp_timer);
         }
@@ -38,14 +41,12 @@ export default function Timer(props) {
 
 
     useEffect(() => {
-
         const is_timer_end = localStorage.getItem("is_timer_end");
 
-        if(is_timer_end === 'true'){
-            localStorage.removeItem("otp_timer")
+
+        if(is_timer_end === 'true' || props.is_timer_end){
             return
         }
-
         let exp_timer = create_timer();
 
 
@@ -55,9 +56,12 @@ export default function Timer(props) {
             if (time_left <= 1000) {
 
                 clearInterval(timer_ref.current);
-                props.setIsTimerEnd(true);
-                localStorage.removeItem("is_timer_end")
-                localStorage.removeItem("otp_timer")
+                localStorage.setItem("is_timer_end", 'true');
+                localStorage.removeItem("otp_timer");
+                props.set_is_timer_end(true);
+                console.log(props.is_timer_end);
+
+
                 return 0
             }
 
@@ -68,8 +72,6 @@ export default function Timer(props) {
             props.setTimerDisplay(formattedTimer);
 
         }
-
-
 
         // Chama imediatamente para evitar 1s de delay
         update_timer();
