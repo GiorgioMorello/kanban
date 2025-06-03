@@ -235,7 +235,6 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:5173',
     'https://kanban-task-project.netlify.app',
 ]
-# TODO: Configurar CELERY
 
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_HTTP_ONLY = True
