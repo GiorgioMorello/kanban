@@ -21,6 +21,7 @@ from .utils.tokens import create_jwt_token, create_cookies
 from .utils.otp_token import generate_otp
 from .tasks import send_otp_to_user
 from django.conf import settings
+from .signals import send_otp_to_email
 
 User = get_user_model()
 
@@ -121,14 +122,14 @@ class OtpVerifyView(APIView):
 
 
         if otp.is_otp_expired():
-            return Response(data="Código invalido ou expirado", status=status.HTTP_400_BAD_REQUEST)
+            return Response(data="Código inválido ou expirado", status=status.HTTP_400_BAD_REQUEST)
 
 
         elif otp.user.is_active:
-            return Response(data={"auth": "Usuário já confirmou E-mail"}, status=status.HTTP_403_FORBIDDEN)
+            return Response(data="Usuário já confirmou E-mail", status=status.HTTP_403_FORBIDDEN)
 
 
-        return Response(data={"detail": "Insira o código de confirmação"}, status=status.HTTP_200_OK)
+        return Response(data="Insira o código de confirmação", status=status.HTTP_200_OK)
 
 
     def post(self, r):
@@ -157,7 +158,7 @@ class OtpVerifyView(APIView):
 
             return resp
 
-        return Response(data={'Error': 'Código inválido ou expirado'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data='Código inválido ou expirado', status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -248,17 +249,38 @@ class APIListCreate(APIView):
 
     permission_classes = [AllowAny]
 
+
+    def is_user_not_active(self, email):
+        user_qs = User.objects.filter(email=email)
+        if user_qs.first() and not user_qs.first().is_active:
+            return user_qs.first()
+
+        return False
+
+
     def get(self, r):
         return Response({'Ok': 'Done!'}, status=status.HTTP_200_OK)
 
 
     def post(self, r):
         data = r.data
+        print(data)
+
+        user_not_active = self.is_user_not_active(data.get('email'))
+        if user_not_active:
+            user_not_active.otp_token.delete() # OTP antigo
+            # Criar OTP
+            send_otp_to_email(instance=user_not_active)
+            return Response(data={'url_code': user_not_active.otp_token.url_code}, status=status.HTTP_201_CREATED)
+
+
         user = RegisterSerializer(data=data)
 
         user.is_valid(raise_exception=True)
         user.save()
-        print(user.data.get('id'))
+        # print(user.data.get('id'))
+
+
 
         otp = OtpToken.objects.filter(user__id=user.data.get('id')).first() # Código OTP é criado através de um signal
 

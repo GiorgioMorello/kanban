@@ -21,10 +21,6 @@ def minha_task():
 
 @shared_task
 def notify_user_about_tasks(user_email, subject, message):
-
-
-
-
     send_mail(subject, message, settings.EMAIL_HOST_USER, [user_email,])
 
 

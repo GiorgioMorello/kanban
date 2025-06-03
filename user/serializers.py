@@ -70,7 +70,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate_email(self, value):
         email = value
-        if User.objects.filter(email=email).exists():
+        user_qs = User.objects.filter(email=email)
+
+        if user_qs.exists():
             raise ValidationError('Esse e-mail já está em uso')
 
         return email
@@ -85,6 +87,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         username = validated_data.get('username')
         email = validated_data.get('email')
         password = validated_data.get('password')
+
+
 
         user = User.objects.create(email=email, username=username, first_name=username.upper(), last_name='')
         user.set_password(password)
