@@ -34,7 +34,6 @@ vi.mock("react-router-dom", async (importOriginal) => {
 
   return {
     ...actual,
-    // Substitui apenas o hook useNavigate por um mock
     useNavigate: () => mockedNavigate,
   };
 });
