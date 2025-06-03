@@ -59,15 +59,18 @@ class TestRegisterUserAPI(TestAPI):
 
 
     def test_register_fails_when_email_already_exists(self):
-        data = {
+        data_user_test = {
             "username": "Teste",
             "email": "test@example.com",
             "password": "123456789",
             "password_2": "123456789"
         }
+        user = User.objects.get(email='test@example.com')
+        user.is_active = True # Deve ser True para não reenviar o OTP
+        user.save()
 
-        resp = self.client.post(self.url, data, format='json')
-
+        #print(user)
+        resp = self.client.post(self.url, data_user_test, format='json')
 
 
         self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST) # Verificar status code
