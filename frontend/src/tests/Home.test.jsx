@@ -9,7 +9,7 @@ import "@testing-library/jest-dom/vitest"
 describe("Home ", ()=>{
     it("renders Homepage message", ()=>{
         render(<Home/>)
-        expect(screen.queryByText(/homepage/i)).toBeInTheDocument()
+        expect(screen.getByText(/homepage/i)).toBeInTheDocument()
     })
 })
 
