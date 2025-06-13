@@ -13,7 +13,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 # TODO: Alterar debug
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda x: [route.strip() for route in x.strip(', ')])
