@@ -14,8 +14,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda x: [route.strip() for route in x.strip(', ')])
-
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda x: [routes for routes in x.split(', ')])
 
 
 INSTALLED_APPS = [
@@ -54,7 +53,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates', 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
