@@ -5,7 +5,7 @@ import {jwtDecode} from "jwt-decode";
 
 
 // Components
-import Input from '../components/Input.jsx'
+import Input from './input/Input.jsx'
 import {Link} from 'react-router-dom'
 import Timer from './Timer.jsx'
 import styles from './VerifyEmailForm.module.css'
@@ -34,25 +34,14 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
 
 
 
-
-
-
     const navigate = useNavigate();
 
-    const submit_ref = useRef(null);
 
 
 
      // Caso o usuário não tenha inserido o código de confirmação, o input submit será bloqueado
     useEffect(()=>{
-        console.log(is_timer_end)
-        setIsOtpFilled(user_otp.length > 1);
-
-        if (submit_ref && user_otp.length > 1){
-            submit_ref.current.disable = false
-        }
-
-
+        setIsOtpFilled(user_otp.length >= 8);
 
     }, [user_otp]);
 
@@ -72,21 +61,19 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
                     {url_code, otp_code: user_otp}
             );
 
-            console.log(resp.status)
+
+
 
             if (resp.status === 200){
                 localStorage.removeItem("otp_timer");
                 localStorage.removeItem("is_timer_end");
 
 
-                setIsTimerEnd(false)
                 setAccessToken(resp.data.access);
                 setUser(jwtDecode(resp.data.access));
 
                 navigate("/dashboard")
                 send_alert("Conta criada com sucesso", "success");
-
-                console.log(localStorage.getItem('is_timer_end'))
 
 
             }
@@ -94,8 +81,14 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
 
         }
         catch (e) {
-            console.log(e);
-            set_error(e.response.data);
+            const resp = e.response
+            if(resp.status === 404) {
+                console.log(resp.data?.detail)
+                set_error(resp.data?.detail);
+                return
+            }
+            set_error(resp.data);
+
         }
 
 
@@ -155,7 +148,7 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
 
             <Timer setTimerDisplay={setTimerDisplay} is_timer_end={is_timer_end} set_is_timer_end={setIsTimerEnd}/>
 
-            <form onSubmit={handle_submit} className={styles.otp_form}>
+            <form data-testid={'verify_email_form'} onSubmit={handle_submit} className={styles.otp_form}>
                 <div className={'form_title'}>
                     <h2 style={{fontSize: "2.8rem", textAlign: "center"}}>Insira o código de confirmação de E-mail</h2>
                 </div>
@@ -166,7 +159,7 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
                 {errors && (
                     <span className='error_msg'>{errors}</span>
                 )}
-                <input ref={submit_ref} className={`submit_btn ${styles.btn} ${is_otp_filled ? styles.btn_active : styles.btn_disabled}`} type={'submit'} value='Entrar'/>
+                <input data-testid={'verify_email_submit_btn'} disabled={!is_otp_filled} className={`submit_btn ${styles.btn} ${is_otp_filled ? styles.btn_active : styles.btn_disabled}`} type={'submit'} value='Entrar'/>
 
 
                 <div className={styles.resend_otp}>

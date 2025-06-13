@@ -6,7 +6,7 @@ import {jwtDecode} from "jwt-decode";
 import {AuthContext} from "../context/AuthContext.jsx";
 
 // Compontents
-import ProfileForm from "../components/ProfileForm";
+import ProfileForm from "../components/profile/ProfileForm.jsx";
 
 
 

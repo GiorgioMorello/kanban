@@ -4,7 +4,7 @@ import {useLocation} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 
 // Components
-import Input from '../../components/Input.jsx'
+import Input from '../../components/input/Input.jsx'
 import {Link} from 'react-router-dom'
 
 // Context
@@ -67,7 +67,6 @@ export default function RegisterPage() {
         } catch (e) {
 
             const resp = e.response;
-            console.log(resp);
 
             if (resp) {
                 setError(resp.data);

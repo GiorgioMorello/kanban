@@ -100,10 +100,11 @@ class OtpVerifyView(APIView):
 
         try:
             otp = OtpToken.objects.get(**filters)
+            print(otp)
 
         except OtpToken.DoesNotExist:
 
-            raise NotFound(detail=True,)
+            raise NotFound(detail="Código inválido")
 
 
         return otp

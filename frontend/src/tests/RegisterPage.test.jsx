@@ -2,40 +2,15 @@ import React from "react"
 import {render, screen, cleanup, fireEvent, waitFor, within} from "@testing-library/react"
 import {describe, it, expect, beforeEach, afterEach, vi} from "vitest";
 import "@testing-library/jest-dom/vitest"
-import RegisterPage from "../routes/login_and_register_form/RegisterPage.jsx";
 import {MemoryRouter} from "react-router-dom";
 import {server} from "../__mocks__/server.jsx";
 import {http, delay, HttpResponse} from 'msw';
+import { mockedNavigate } from "../__mocks__/mockRouter"; // Isso já ativa o mock de useNavigate
+import "../__mocks__/mockSendAlert.jsx";
+import RegisterPage from "../routes/login_and_register_form/RegisterPage.jsx";
 
 
 
-vi.mock("../utils/Alert.jsx", () => {
-  const mocked_send_alert = vi.fn(); // vai simular o envio real
-
-  return {
-    __esModule: true,
-    default: () => mocked_send_alert,  // Alert() retorna mocked_send_alert
-    __mocked_send_alert: mocked_send_alert, // para testarmos
-  };
-});
-
-import { __mocked_send_alert as mocked_send_alert } from "../utils/Alert.jsx";
-
-
-// Cria uma função mock para simular o comportamento do hook useNavigate do react-router-dom
-const mockedNavigate = vi.fn();
-
-// Faz o mock do módulo 'react-router-dom'
-vi.mock("react-router-dom", async (importOriginal) => {
-  // Importa o módulo real para manter o restante das funcionalidades intactas
-  const actual = await importOriginal();
-
-  return {
-    ...actual,
-    // Substitui apenas o hook useNavigate por um mock
-    useNavigate: () => mockedNavigate,
-  };
-});
 
 
 
@@ -45,6 +20,8 @@ function fill_form(){
     fireEvent.change(screen.getByLabelText(/^senha$/i),{target: {value: "123456789"}})
     fireEvent.change(screen.getByLabelText(/confirme sua senha/i),{target: {value: "123456789"}})
 }
+
+import Alert, { __mocked_send_alert as mockedSendAlert } from "../utils/Alert.jsx";
 
 // 3️⃣ Cleanup
 afterEach(() => {
@@ -206,7 +183,7 @@ describe("RegisterPage test", () => {
 
 
         await waitFor(()=>{
-            expect(mocked_send_alert).toHaveBeenCalledWith("Foi enviado um código para seu e-mail", "success");
+            expect(mockedSendAlert).toHaveBeenCalledWith("Foi enviado um código para seu e-mail", "success");
         })
     })
 

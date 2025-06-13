@@ -3,7 +3,7 @@ import React, {useState, useContext, useEffect,} from 'react';
 import {useLocation, useParams, useNavigate} from "react-router-dom";
 
 // Components
-import Input from '../../components/Input.jsx'
+import Input from '../../components/input/Input.jsx'
 import {Link} from 'react-router-dom'
 import VerifyEmailForm from "../../components/VerifyEmailForm.jsx";
 
@@ -48,22 +48,12 @@ export default function VerifyEmail() {
 
             } catch (e) {
                 const resp = e.response;
-
-                switch (resp.status) {
-
-                    case 400:
-                        setError((resp.data?.detail && "Código inválido ou expirado") || resp.data )
-                        break
-
-                    case 403:
-                        setError(resp.data.detail)
-                        break
-
-                    case 404:
-                        setError("Código inválido ou expirado")
-
-
+                if(resp.data?.detail) {
+                    setError(resp.data.detail);
+                    return
                 }
+                setError(resp.data);
+
 
             }
 

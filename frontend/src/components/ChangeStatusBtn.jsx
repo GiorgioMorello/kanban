@@ -1,5 +1,5 @@
 import styles from "./tasks/TaskForm.module.css";
-import Input from "./Input.jsx";
+import Alert from "../utils/Alert.jsx";
 
 // Hooks
 import React, {useState} from "react";
@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 export default function ChangeStatusBtn({current_status, class_name, task_id}) {
 
     const axios_private_instance = useAxiosPrivate();
+    const send_alert = Alert();
 
     const {setIsTasksChanged} = useTaskContext()
 
@@ -48,20 +49,7 @@ export default function ChangeStatusBtn({current_status, class_name, task_id}) {
         }
 
         catch (e) {
-            Swal.fire({
-                    title: "Não foi possivel alterar o status da task",
-                    icon: "error",
-                    toast: true,
-                    timer: 4000,
-                    position: "top-right",
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    grow: false,
-                    heightAuto: false,
-                    customClass: {
-                        popup: 'small_toast'
-                    }
-                })
+            send_alert("Não foi possivel alterar o status da task", "error")
             console.log(e.response.data);
 
         }

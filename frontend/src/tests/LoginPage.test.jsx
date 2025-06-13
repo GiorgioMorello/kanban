@@ -5,38 +5,18 @@ import "@testing-library/jest-dom/vitest"
 import {MemoryRouter} from "react-router-dom";
 import {server} from "../__mocks__/server.jsx";
 import {http, delay, HttpResponse} from 'msw';
-import LoginPage from "../routes/login_and_register_form/LoginPage";
+import {access_token} from './tests_utils.jsx'
 import MockAuthProvider from "../__mocks__/MockAuthProvider.jsx";
+import { mockedNavigate } from "../__mocks__/mockRouter"; // Isso já ativa o mock de useNavigate
+import "../__mocks__/mockSendAlert.jsx";
+
+import LoginPage from "../routes/login_and_register_form/LoginPage";
 
 
 
-
-vi.mock("../utils/Alert.jsx", () => {
-  const mocked_send_alert = vi.fn(); // vai simular o envio real
-
-  return {
-    __esModule: true,
-    default: () => mocked_send_alert,  // Alert() retorna mocked_send_alert
-    __mocked_send_alert: mocked_send_alert, // para testarmos
-  };
-});
 
 import Alert, { __mocked_send_alert as mocked_send_alert } from "../utils/Alert.jsx";
 
-
-// Cria uma função mock para simular o comportamento do hook useNavigate do react-router-dom
-const mockedNavigate = vi.fn();
-
-// Faz o mock do módulo 'react-router-dom'
-vi.mock("react-router-dom", async (importOriginal) => {
-  // Importa o módulo real para manter o restante das funcionalidades intactas
-  const actual = await importOriginal();
-
-  return {
-    ...actual,
-    useNavigate: () => mockedNavigate,
-  };
-});
 
 
 
@@ -65,11 +45,7 @@ describe('LoginPage test', ()=> {
     })
 
 
-    it("mocked send_alert deve funcionar isoladamente", () => {
-          const send_alert = Alert();
-          send_alert("Título Teste", "success");
-          expect(mocked_send_alert).toHaveBeenCalledWith("Título Teste", "success");
-    });
+
 
 
     it("renders the page title", () => {
@@ -151,7 +127,7 @@ describe('LoginPage test', ()=> {
             http.post('http://127.0.0.1:8000/user/login/', async ({request})=>{
 
                 return HttpResponse.json({
-                    access: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ4OTE2NjI3LCJpYXQiOjE3NDg5MTI3MjcsImp0aSI6ImE0NTBjYjBiM2MzODQ5NzJhNmQ4N2Y4N2Y4NDhhODE3IiwidXNlcl9pZCI6MSwiZnVsbF9uYW1lIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJiaW8iOiJnamhmaGciLCJwcm9maWxlX3BpYyI6Imh0dHBzOi8vZGphbmdvLWFwaS52cHMta2luZ2hvc3QubmV0L21lZGlhL3Byb2ZpbGVfcGljL2RlZmF1bHQuanBnIiwidmVyaWZpZWQiOmZhbHNlfQ.OtG-zirTym2hkezrIcHwU_I7TIOiE57X7BO3D_WXpBg',
+                    access: access_token,
                     refresh: 'refresh token',
                 }, {status: 200})
 

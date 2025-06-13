@@ -1,5 +1,5 @@
 import styles from "./TaskForm.module.css";
-import Input from "../Input.jsx";
+import Input from "../input/Input.jsx";
 
 // Hooks
 import React, {useEffect, useState, useRef, useContext} from "react";

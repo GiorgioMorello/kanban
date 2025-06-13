@@ -1,0 +1,44 @@
+
+
+.navbar_bg {
+    background-color: var(--primary_color);
+    color: var(--second_color)
+}
+
+
+.logo {
+    max-width: 5rem;
+}
+
+.navbar_container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem
+}
+
+.nav_links {
+    display: flex;
+    gap: 0.5rem
+}
+
+.nav_links li a, .nav_btn {
+    display: block;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    color: #999;
+    transition: 0.3s;
+}
+
+.nav_links li a:hover, .nav_btn:hover {
+    color: var(--second_color)
+}
+
+.nav_btn {
+    border: none;
+    font-size: 1.6rem;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+}

@@ -2,7 +2,7 @@
 import React, {useState, useContext, useEffect, useRef} from 'react';
 
 // Components
-import Input from '../components/Input.jsx'
+import Input from './input/Input.jsx'
 
 
 // Context

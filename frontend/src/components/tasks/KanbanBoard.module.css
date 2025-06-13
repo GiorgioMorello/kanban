@@ -46,15 +46,15 @@
 
 
 .status:nth-child(1)  .status_title{
-    background-color: #FAA0A0;
+    background-color: var(--bg_todo);
 }
 
 .status:nth-child(2)  .status_title{
-    background-color: #FCF55F ;
+    background-color: var(--bg_doing) ;
 }
 
 .status:nth-child(3)  .status_title{
-    background-color: #9FE2BF ;
+    background-color: var(--bg_done) ;
 }
 
 .tasks_container {

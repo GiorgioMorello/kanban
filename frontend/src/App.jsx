@@ -5,7 +5,7 @@ import {AuthProvider} from './context/AuthContext.jsx'
 import {TaskProvider} from './context/TaskContext.jsx'
 
 // Components
-import NavBar from './components/NavBar.jsx'
+import NavBar from './components/navbar/NavBar.jsx'
 
 
 

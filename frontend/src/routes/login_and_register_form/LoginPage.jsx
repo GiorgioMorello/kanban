@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import Input from '../../components/Input.jsx';
+import Input from '../../components/input/Input.jsx';
 import styles from './auth_form.module.css';
 import {Link, useNavigate} from 'react-router-dom';
 import {AuthContext} from "../../context/AuthContext.jsx";

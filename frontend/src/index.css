@@ -3,7 +3,10 @@
     --second_color: #fff;
     --default_red: indianred;
     --main_gray: #ddd;
-    --main_bg: #EEE5E9
+    --main_bg: #EEE5E9;
+    --bg_todo: #FAA0A0;
+    --bg_doing: #FCF55F;
+    --bg_done: #9FE2BF;
 
 }
 

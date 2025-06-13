@@ -1,7 +1,10 @@
-import {createContext, useState, useEffect, useContext, useMemo} from 'react';
 import useRefreshToken from "../hooks/useRefreshToken.jsx";
 import {AuthContext} from "../context/AuthContext.jsx";
+import {vi} from "vitest";
 
+
+export const mockSetUser = vi.fn();
+export const mockSetAccessToken = vi.fn();
 
 export default function MockAuthProvider({children, user=null, accessToken}){
 
@@ -12,8 +15,8 @@ export default function MockAuthProvider({children, user=null, accessToken}){
         <AuthContext.Provider value={{
             user,
             accessToken,
-            setUser: () => {},
-            setAccessToken: () => {},
+            setUser: mockSetUser,
+            setAccessToken: mockSetAccessToken,
             refreshToken: null,
             setRefreshToken: () => {},
             csrftoken: null,

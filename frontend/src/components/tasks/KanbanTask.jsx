@@ -9,7 +9,7 @@ import {useAuthContext} from "../../context/AuthContext.jsx";
 import {useTaskContext} from "../../context/TaskContext.jsx";
 
 // Components
-import Input from "../Input.jsx";
+import Input from "../input/Input.jsx";
 import ChangeStatusBtn from "../ChangeStatusBtn.jsx";
 
 

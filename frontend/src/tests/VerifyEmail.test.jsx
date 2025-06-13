@@ -5,16 +5,19 @@ import "@testing-library/jest-dom/vitest"
 import {MemoryRouter, Route, Routes} from "react-router-dom";
 import {server} from "../__mocks__/server.jsx";
 import {http, delay, HttpResponse} from 'msw';
-import VerifyEmail from "../routes/verify_email_page/VerifyEmail.jsx";
 import MockAuthProvider from "../__mocks__/MockAuthProvider";
+import { mockedNavigate, mockedUseParams } from "../__mocks__/mockRouter"; // Isso já ativa o mock de useNavigate
+import "../__mocks__/mockSendAlert.jsx";
 
+
+import VerifyEmail from "../routes/verify_email_page/VerifyEmail.jsx";
 
 
 
 function render_component(fakeUrlCode, user=null){
     render(
             <MemoryRouter initialEntries={[`/verify-email/${fakeUrlCode}`]}>
-                <MockAuthProvider user={user}>
+                <MockAuthProvider user={user}> {/* Utilizando o AuthContext para simular que o usuário está autenticado */}
                     <Routes>
                         <Route path="/verify-email/:url_code" element={<VerifyEmail/>}/>
                     </Routes>
@@ -43,19 +46,7 @@ function server_user(fakeUrlCode, body, status){
         );
 }
 
-const mockedNavigate = vi.fn();
-let mockedUseParams = vi.fn(() => ({url_code: 'fake-url-code'}));
 
-vi.mock("react-router-dom", async (importOriginal) => {
-    const actual = await importOriginal();
-
-    return {
-        ...actual,
-        // Substitui apenas o hook useNavigate por um mock
-        useNavigate: () => mockedNavigate, // Retorna o mock mockedNavigate.
-        useParams: () => mockedUseParams() // Retorna o resultado da função mockedUseParams().
-    };
-});
 
 
 // 3️⃣ Cleanup
