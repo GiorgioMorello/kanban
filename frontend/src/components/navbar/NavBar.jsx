@@ -40,7 +40,7 @@ export default function NavBar(){
             <div className={`wrapper ${styles.navbar_container}` }>
                 <div className={styles.logo}>
                     <Link to='/'>
-                        <img src='/frontend/public/clipboard.png' />
+                        <img src='/clipboard.png' />
                     </Link>
 
                 </div>
