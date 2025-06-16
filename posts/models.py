@@ -79,7 +79,7 @@ class Task(models.Model):
         tasks = Task.objects.select_related('owner')
 
         # tasks que irão expirar amanhã
-        tasks_about_to_expire = tasks.filter(end_date=cls.now_sp().date() + timezone.timedelta(days=1))
+        tasks_about_to_expire = tasks.filter(end_date=cls.now_sp().date() + timezone.timedelta(days=1), task_status__in=['TO', 'DO'])
 
         # Verificar quais das tasks que estão preste a expirar não foi criado hoje
         email_to_tasks = list(filter(cls.is_not_created_today, tasks_about_to_expire))
