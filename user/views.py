@@ -100,7 +100,6 @@ class OtpVerifyView(APIView):
 
         try:
             otp = OtpToken.objects.get(**filters)
-            print(otp)
 
         except OtpToken.DoesNotExist:
 
@@ -265,7 +264,6 @@ class APIListCreate(APIView):
 
     def post(self, r):
         data = r.data
-        print(data)
 
         user_not_active = self.is_user_not_active(data.get('email'))
         if user_not_active:
