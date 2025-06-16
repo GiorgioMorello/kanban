@@ -12,7 +12,6 @@ import VerifyEmail from "../routes/verify_email_page/VerifyEmail.jsx";
 
 
 
-
 // Função auxiliar para renderizar o componente com contexto de rota e autenticação
 function render_component(fakeUrlCode, user = null) {
     render(
@@ -29,7 +28,7 @@ function render_component(fakeUrlCode, user = null) {
 // Função auxiliar para configurar o mock do servidor para o endpoint de verificação
 function server_user(fakeUrlCode, body, status) {
     server.use(
-        http.get("http://127.0.0.1:8000/user/otp-verification/", async ({ request }) => {
+        http.get(`${baseURL}user/otp-verification/`, async ({ request }) => {
             const url = new URL(request.url);
             const url_code = url.searchParams.get("url_code");
 

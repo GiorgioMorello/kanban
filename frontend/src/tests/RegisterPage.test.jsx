@@ -18,7 +18,7 @@ import Alert, { __mocked_send_alert as mockedSendAlert } from "../utils/Alert.js
 // Função auxiliar para configurar o mock do servidor para o endpoint de registrar usuário
 function server_use(body, status){
     server.use(
-            http.post('http://127.0.0.1:8000/user/register/', async () => {
+            http.post(`${baseURL}user/register/`, async () => {
                 return HttpResponse.json(body, status);
             })
         );
@@ -75,7 +75,7 @@ describe("RegisterPage test", () => {
         let requestBody;
 
         server.use(
-            http.post('http://127.0.0.1:8000/user/register/', async ({ request }) => {
+            http.post(`${baseURL}user/register/`, async ({ request }) => {
                 requestBody = await request.json();
                 return HttpResponse.json({
                     user: { name: "Name Test" },

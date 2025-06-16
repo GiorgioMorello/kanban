@@ -23,7 +23,7 @@ import Alert, { __mocked_send_alert as mocked_send_alert } from "../utils/Alert.
 // Função auxiliar para configurar o mock do servidor para o endpoint de login
 function server_use(body, status) {
     server.use(
-            http.post('http://127.0.0.1:8000/user/login/', () => {
+            http.post(`${baseURL}user/login/`, () => {
                 return HttpResponse.json(body, status)
             })
         )
@@ -76,7 +76,7 @@ describe('LoginPage test', () => {
         let requestBody
 
         server.use(
-            http.post('http://127.0.0.1:8000/user/login/', async ({ request }) => {
+            http.post(`${baseURL}user/login/`, async ({ request }) => {
                 requestBody = await request.json()
                 return HttpResponse.json({}, { status: 200 })
             })

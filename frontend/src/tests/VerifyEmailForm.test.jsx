@@ -23,7 +23,7 @@ function fill_form(otp) {
 // Função auxiliar para configurar o mock do servidor com resposta desejada
 function server_use(body = {ok: 'ok'}, status = {status: 200}) {
     server.use(
-        http.post('http://127.0.0.1:8000/user/otp-verification/', async ({request}) => {
+        http.post(`${baseURL}user/otp-verification/`, async ({request}) => {
             return HttpResponse.json(body, status);
         })
     );
