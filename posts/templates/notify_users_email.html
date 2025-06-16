@@ -1,0 +1,26 @@
+{% extends "base_html_template.html" %}
+
+
+{% block title %}⏰ Lembrete: Suas tarefas expiram amanhã!{% endblock %}
+
+{% block content %}
+    <h1>Olá 👋</h1>
+    <p>As seguintes tarefas estão com a data de expiração marcada para <b>amanhã</b> 📅:</p>
+
+    <div class="code">
+
+        <ul>
+            {% for task in task_list %}
+                <li>{{ task }}</li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
+    <p>Se você já concluiu alguma dessas tarefas, lembre-se de atualizá-las no sistema ✍️.</p>
+    <p style="margin-top: 30px;">Abraços</p>
+{% endblock %}
+
+
+
+

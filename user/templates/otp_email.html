@@ -1,0 +1,16 @@
+{% extends "base_html_template.html" %}
+
+
+{% block title %}🔐 Verificação de E-mail{% endblock %}
+
+{% block content %}
+    <h1>Olá, {{first_name}} 👋</h1>
+    <p>Seu código para confirmação de e-mail é:</p>
+    <div class="code">{{token}}</div>
+    <p>⚠️ Este código expira em <strong>5 minutos</strong>.</p>
+    <p>Para concluir a verificação, clique no botão abaixo:</p>
+    <a class="button" href="{{ verification_link }}">Verificar e-mail</a>
+    <p style="margin-top: 30px;">Se você não solicitou essa verificação, por favor ignore este e-mail.</p>
+{% endblock %}
+
+
