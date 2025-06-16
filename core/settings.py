@@ -261,12 +261,11 @@ EMAIL_USE_SSL = config('EMAIL_USE_SSL')
 
 
 
-
 # TESTS
-
-
 if 'test' in sys.argv or 'pytest' in sys.modules:
     # Faz com que as tasks  sejam executadas como funções normais (sem passar pelo Redis, RabbitMQ ou qualquer broker).
     CELERY_TASK_ALWAYS_EAGER = True
 
     CELERY_TASK_EAGER_PROPAGATES = True # Essa opção diz: se a task der erro, levante a exceção imediatamente.
+
+
