@@ -17,7 +17,11 @@
 
 
 .task_text h3{
+
     padding-bottom: 0.5rem;
+    word-break: break-word; /* quebra palavras longas */
+    overflow-wrap: break-word; /* comportamento semelhante, compatível com navegadores mais antigos */
+    white-space: normal; /* garante que o texto possa quebrar linha */
 }
 
 
