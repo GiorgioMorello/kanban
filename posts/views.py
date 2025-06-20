@@ -16,58 +16,7 @@ from .tasks import minha_task
 
 
 
-
-
-#
-# @api_view(http_method_names=['get', 'post'])
-# @permission_classes([AllowAny,])
-# def list_task(r):
-#     print('kjhj')
-#     tasks = Task.objects.all()
-#     serializer = TaskSerializer(instance=tasks, many=True)
-#     # minha_task.delay()
-#     return Response(serializer.data)
-#
-
-
-
-
-
-
-
-
-
-
-#
-# @api_view(http_method_names=['get', 'patch', 'delete'])
-# def task_detail(r, id):
-#     task = get_object_or_404(Task.objects.all(), id=id)
-#
-#
-#     if r.method == "PATCH":
-#         data = r.data
-#
-#         serializer = TaskSerializer(instance=task, data=data, partial=True)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#
-#
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-#
-#     elif r.method == "DELETE":
-#         task.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-#
-#     elif r.method == "GET":
-#         serializer = TaskSerializer(instance=task, many=False)
-#         return Response(serializer.data)
-#
-
-
-
-# Class Based API view
-
-class APIList(APIView):
+class APIListTask(APIView):
 
 
 
@@ -94,6 +43,12 @@ class APIList(APIView):
         """
             Cria uma nova tarefa com base nos dados fornecidos pelo usuário.
 
+            title: str,
+            description: str,
+            task_status: str,
+            end_date: "2025-01-27",
+            owner: user id
+
             :param r: Objeto da requisição HTTP contendo os dados da nova tarefa no corpo (JSON).
             :return: Dados da tarefa recém-criada, serializados.
         """
@@ -105,7 +60,7 @@ class APIList(APIView):
 
 
 
-class APIDetail(APIView):
+class TaskDetailAPI(APIView):
 
     permission_classes = [IsAuthenticated]
 
@@ -175,11 +130,6 @@ class APIDetail(APIView):
         return Response(data={'id': id}, status=status.HTTP_200_OK)
 
 
-
-class TaskAPIDetailGeneric(RetrieveUpdateDestroyAPIView):
-
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
 
 
 
