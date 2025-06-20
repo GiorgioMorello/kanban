@@ -221,8 +221,8 @@ def login_view(request):
 def logout_view(request):
     try:
 
-        refreshToken = request.COOKIES.get('refresh')
-        token = RefreshToken(refreshToken)
+        refresh_token = request.COOKIES.get('refresh')
+        token = RefreshToken(refresh_token)
         token.blacklist()
 
         resp = Response()
@@ -251,6 +251,7 @@ class APIListCreate(APIView):
 
 
     def is_user_not_active(self, email):
+
         user_qs = User.objects.filter(email=email)
         if user_qs.first() and not user_qs.first().is_active:
             return user_qs.first()
@@ -265,6 +266,7 @@ class APIListCreate(APIView):
     def post(self, r):
         data = r.data
 
+        # Caso o usuário já tenha criado uma conta, mas não fez a confirmação de email e está tentando criar a conta novamente
         user_not_active = self.is_user_not_active(data.get('email'))
         if user_not_active:
             user_not_active.otp_token.delete() # OTP antigo

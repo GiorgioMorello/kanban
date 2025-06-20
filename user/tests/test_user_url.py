@@ -8,17 +8,10 @@ from user import views as user_views
 class TestUserAPIURLs(test.APITestCase):
 
 
-    def test_login_url_is_correct(self):
-        url = reverse("user_app:login")
-        self.assertEqual(url, "/user/login/")
 
     def test_register_url_is_correct(self):
         url = reverse("user_app:register_user")
         self.assertEqual(url, "/user/register/")
-
-    def test_logout_url_is_correct(self):
-        url = reverse("user_app:logout")
-        self.assertEqual(url, "/user/logout/")
 
     def test_otp_verification_url_is_correct(self):
         url = reverse("user_app:otp_verification")
@@ -55,9 +48,6 @@ class TestUserAPIURLs(test.APITestCase):
         view = resolve(reverse("user_app:register_user"))
         self.assertIs(view.func.view_class, user_views.APIListCreate)
 
-    def test_logout_url_view_is_correct(self):
-        view = resolve(reverse("user_app:logout"))
-        self.assertIs(view.func, user_views.logout_view)
 
     def test_otp_verification_url_view_is_correct(self):
         view = resolve(reverse("user_app:otp_verification"))

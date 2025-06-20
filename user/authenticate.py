@@ -21,22 +21,13 @@ class CustomAuthentication(jwt_authentication.JWTAuthentication):
     def authenticate(self, request: Request) -> Optional[Tuple]:
         try:
             header = self.get_header(request)
-            raw_token = request.COOKIES.get('access') or None
-
-
-            # Tenta pegar o token do header ou do cookie
-            #raw_token = (
-            #    self.get_raw_token(self.get_header(request))
-            #    or request.COOKIES.get('access')
-            #)
-
-            if header is None:
-                return None
-            else:
+            if header is not None:
                 raw_token = self.get_raw_token(header)
+            else:
+                raw_token = request.COOKIES.get('access')
 
             if not raw_token:
-                return None  # Nenhum token fornecido
+                return None
 
             validated_token = self.get_validated_token(raw_token)
             enforce_csrf(request)  # Só verifica CSRF se o token for válido

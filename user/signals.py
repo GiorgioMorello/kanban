@@ -37,24 +37,3 @@ def create_profile_and_send_otp(sender, instance, created, **kwargs):
         send_otp_to_email(instance)
 
 
-
-
-# @receiver(signals.post_save, sender=User)
-# def send_otp_to_email(sender, instance, created, **kwargs):
-#     if created:
-#         token = generate_otp(4)
-#         url_code = generate_otp(26)
-#         otp = OtpToken.objects.create(user=instance, otp_token=token, url_code=url_code, otp_expires_at=timezone.now()+timezone.timedelta(minutes=5))
-#
-#         instance.is_active = False
-#         instance.save()
-#         print(otp)
-#         send_otp(token=otp, user=instance).delay()
-
-
-
-
-# sender is the class that will be observed
-#signals.post_save.connect(cria_historico, sender=Pessoa)
-
-
