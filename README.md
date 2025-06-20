@@ -1,5 +1,5 @@
 # 🗂️ TaskBoard - Kanban App com Django + React(em desenvolvimento) 
-#### Projeto: https://kanban-task-project.netlify.app/register
+#### Projeto: <a href="https://kanban-task-project.netlify.app/register" target="_blank">TaskBoard</a>
 
 
 Um sistema completo de gerenciamento de tarefas no estilo **Kanban**, desenvolvido com **Django Rest Framework** no backend e **React.js** no frontend. Permite a criação, organização e acompanhamento de tarefas em colunas, com funcionalidades modernas e notificações automáticas por e-mail.
