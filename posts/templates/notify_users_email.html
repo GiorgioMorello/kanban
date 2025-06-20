@@ -7,14 +7,12 @@
     <h1>Olá 👋</h1>
     <p>As seguintes tarefas estão com a data de expiração marcada para <b>amanhã</b> 📅:</p>
 
-    <div class="code">
-
-        <ul>
+    <div>
+        <ul class="task_list">
             {% for task in task_list %}
                 <li>{{ task }}</li>
             {% endfor %}
         </ul>
-
 
     </div>
     <p>Se você já concluiu alguma dessas tarefas, lembre-se de atualizá-las no sistema ✍️.</p>

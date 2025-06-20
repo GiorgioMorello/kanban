@@ -24,7 +24,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'expired_end_date_task': {
         'task': 'posts.tasks.notify_users_about_expiring_tasks',
-        'schedule': crontab(minute='0', hour='9')
+        'schedule': crontab(minute='0', hour='12')
     },
 }
 
