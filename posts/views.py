@@ -10,7 +10,7 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from user.models import Profile
 from rest_framework.exceptions import NotFound
-from .tasks import minha_task
+
 
 
 
