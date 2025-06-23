@@ -76,7 +76,7 @@ AUTH_USER_MODEL = 'user.User'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-print(os.getenv('USE_MYSQL'), os.getenv('DB_NAME'), os.getenv('DB_HOST'), )
+
 
 if os.getenv('USE_MYSQL') == '1':
     DATABASES = {
@@ -236,6 +236,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:5173',
     'http://127.0.0.1:3000',
     'https://kanban-task-project.netlify.app',
+    'https://my-api.vps-kinghost.net',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -260,7 +261,6 @@ result_backend = 'django-db'
 accept_content = ['json']
 task_serializer = 'json'
 timezone = 'America/Sao_Paulo'
-
 
 
 # CELERY_BEAT
