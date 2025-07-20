@@ -7,16 +7,11 @@ import {useTaskContext} from "../../context/TaskContext.jsx";
 
 // Compontents
 import styles from './Dashboard.module.css';
-import KanbanBoard from "../../components/KanbanBoard.jsx";
+import KanbanBoard from "../../components/tasks/KanbanBoard.jsx";
 
 
 
 export default function Dashboard(){
-
-    const {is_tasks_changed, todo_tasks, doing_tasks, done_tasks} = useTaskContext()
-    const [tasks, setTasks] = useState([]);
-
-
 
 
 

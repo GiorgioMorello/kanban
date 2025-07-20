@@ -1,4 +1,4 @@
-import {createContext, useState, useEffect, useContext} from 'react';
+import {createContext, useState, useEffect, useContext, useMemo} from 'react';
 
 // Contexts
 import {AuthContext} from "./AuthContext.jsx";
@@ -63,12 +63,16 @@ export function TaskProvider({children}) {
 
 
 
-    const {todo_tasks, doing_tasks, done_tasks} = tasks.reduce((acc, task) => {
-        if (task.task_status === 'TO') acc.todo_tasks.push(task);
-        if (task.task_status === 'DO') acc.doing_tasks.push(task);
-        if (task.task_status === 'DN') acc.done_tasks.push(task);
-        return acc
-    }, {todo_tasks: [], doing_tasks: [], done_tasks: []}) // Valor inicial
+    const {todo_tasks, doing_tasks, done_tasks} = useMemo(()=>{
+        return tasks.reduce((acc, task) => {
+            if (task.task_status === 'TO') acc.todo_tasks.push(task);
+            if (task.task_status === 'DO') acc.doing_tasks.push(task);
+            if (task.task_status === 'DN') acc.done_tasks.push(task);
+            return acc
+        }, {todo_tasks: [], doing_tasks: [], done_tasks: []}) // Valor inicial
+    }, [tasks])
+
+
 
 
 

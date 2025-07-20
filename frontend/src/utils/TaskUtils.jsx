@@ -8,22 +8,16 @@ export default function TaskUtils(){
     function validate_form(date, title, desc, set_errors, is_editing){
         let post_errors = [];
 
-
         if (title.length <= 1 || desc.length <= 1){
             post_errors.push('Os campos de textos devem devem ter mais que um carácter')
         }
 
-
-
-        if (!is_editing && date < current_date){
+        if (date < current_date){
             post_errors.push('Selecione uma data válida');
 
         } else {
 
         }
-
-
-
 
         //console.log(input_date, current_date)
 

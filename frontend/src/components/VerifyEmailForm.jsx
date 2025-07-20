@@ -14,7 +14,7 @@ import Alert from "../utils/Alert.jsx";
 
 
 // Context
-import {AuthContext} from "../context/AuthContext.jsx";
+import {useAuthContext} from "../context/AuthContext.jsx";
 import {axios_instance} from "../axios/Index.jsx";
 
 
@@ -28,7 +28,7 @@ export default function VerifyEmailForm({set_error, errors, url_code}) {
     const [timer_display, setTimerDisplay] = useState("5:00");
     const [user_otp, setUserOtp] = useState("");
     const [is_otp_filled, setIsOtpFilled] = useState(false);
-    const {setUser, user, setAccessToken, setRefreshToken} = useContext(AuthContext);
+    const {setUser, user, setAccessToken, setRefreshToken} = useAuthContext()
     const [success_msg, setSuccessMsg] = useState("");
     const send_alert = Alert();
 

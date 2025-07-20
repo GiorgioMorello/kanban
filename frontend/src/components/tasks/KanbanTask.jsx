@@ -32,19 +32,19 @@ export default function KanbanTask({props, status_color}) {
     // States
     const task_end_date = props.end_date.split('-');
     const formatted_date = `${task_end_date[2]}-${task_end_date[1]}-${task_end_date[0]}`
+    const [date, setDate] = useState(props.end_date && formatted_date);
 
     const [is_menu_open, setIsMenuOpen] = useState(false);
     const [is_editing, setIsEditing] = useState(false);
     const [title, setTitle] = useState(props.title && props.title);
     const [desc, setDesc] = useState(props.description && props.description);
     const [task_edited, setTaskEdited] = useState(false);
-    const [date, setDate] = useState(props.end_date && formatted_date);
     const [errors, setErrors] = useState([]);
-    const [is_task_deadline_valid, setIsTaskDeadlineValid] = useState(false);
+    const [is_task_deadline_expired, setIsTaskDeadlineExpired] = useState(false);
 
 
 
-    // HOOKS
+    // useRef
     const task_menu = useRef(null);
     const config_container = useRef(null);
 
@@ -88,23 +88,29 @@ export default function KanbanTask({props, status_color}) {
 
             setErrors([])
             console.log('Valido', date);
-            const resp = await axios_private_instance.patch(`api/class/task/${props.id}`, {
-                title,
-                description: desc,
-                end_date: date,
-            })
+            try{
+                const resp = await axios_private_instance.patch(`api/class/task/${props.id}`, {
+                    title,
+                    description: desc,
+                    end_date: date,
+                })
 
-            if (resp.status === 200) {
-                const data = resp.data
-                setIsTasksChanged(data);
-                setIsEditing(false)
+                if (resp.status === 200) {
+                    const data = resp.data
+                    setIsTasksChanged(data);
+                    setIsEditing(false);
+                    close_edit_field()
+                }
+            } catch (e) {
+                setErrors(e.response.data.detail)
             }
+
         }
 
 
     }
 
-    function close_edit_field(e) {
+    function close_edit_field() {
         setTitle(props.title);
         setDesc(props.description);
         setDate(formatted_date);
@@ -117,7 +123,7 @@ export default function KanbanTask({props, status_color}) {
 
 
 
-    function toggle_config_btn(e) {
+    function toggle_menu_btn(e) {
         // e.stopPropagation();  //Impede que o clique na .config chegue ao handle_click_outside
         setIsMenuOpen((prevState) => !prevState);
     }
@@ -160,14 +166,14 @@ export default function KanbanTask({props, status_color}) {
     }, [date, title, desc]);
 
 
-    // Caso a data final tenha expirado, setar setIsTaskDeadlineValid como true
+    // Caso a data final tenha expirado, setar setIsTaskDeadlineExpired como true
     useEffect(()=>{
 
         if(formatted_date < current_date){
-            setIsTaskDeadlineValid(true);
+            setIsTaskDeadlineExpired(true);
 
         } else{
-            setIsTaskDeadlineValid(false);
+            setIsTaskDeadlineExpired(false);
         }
     }, [formatted_date, current_date, is_tasks_changed])
 
@@ -175,7 +181,7 @@ export default function KanbanTask({props, status_color}) {
     return (
         <>
 
-            <div className={styles.task} id='task' style={{borderLeft: `4px solid ${border_color}`}}>
+            <div data-testid="task" className={styles.task} id='task' style={{borderLeft: `4px solid ${border_color}`}}>
 
                 {errors && errors.map((error) => (
                     <span className='error_msg'>{error}</span>
@@ -185,11 +191,11 @@ export default function KanbanTask({props, status_color}) {
 
                     {/* ABRIR O FORMULARIO PARA EDITAR A TASK */}
                     {!is_editing ? (<>
-                            <h3>{props.title}</h3>
+                            <h3 data-testid="task_title">{props.title}</h3>
                             <p>{props.description}</p>
                         </>) :
                         (
-                            <form onSubmit={close_edit_field}>
+                            <form data-testid="edit_task_form" onSubmit={save_edited_task}>
                                 <div className='task_text'>
 
                                     <Input value={title} type='text'
@@ -206,11 +212,12 @@ export default function KanbanTask({props, status_color}) {
                                            placeholder='Data final' value={date} type='date'/>
 
                                     <div className='form_btns'>
-                                        <button className={task_edited ? undefined : styles.check_btn}
-                                                onClick={task_edited ? save_edited_task : undefined}>
+                                        <button data-testid="task_edit_form_btn" className={task_edited ? '' : styles.check_btn}
+                                                disabled={!task_edited}>
+
                                             <i className='bx bx-check'></i>
                                         </button>
-                                        <button type='submit'>
+                                        <button onClick={close_edit_field}>
                                             <i className='bx bx-x'></i>
                                         </button>
                                     </div>
@@ -222,38 +229,38 @@ export default function KanbanTask({props, status_color}) {
 
 
                 <div className={styles.task_owner_info} style={{display: is_editing ? "none" : 'flex'}}>
-                    {is_task_deadline_valid && props.task_status !== 'DN' ?  (
-                        <span title={is_task_deadline_valid && props.task_status !== 'DN' ?  'Data final expirada' : '' } style={is_task_deadline_valid ? {color: "var(--default_red)"} : {color: "#999"}} className={styles.task_date}>
-                        {props.creation_date} / {props.end_date} {is_task_deadline_valid &&
-                        (
+                    {is_task_deadline_expired && props.task_status !== 'DN' ?  (
+                        <span data-testid="task_expired_warning" title={'Data final expirada'} style={{color: "var(--default_red)"}} className={styles.task_date}>
+
+                            {props.creation_date} / {props.end_date}
                             <i style={{fontSize: '1.6rem', verticalAlign: "sub"}} className='bx bx-calendar-exclamation'></i>
-                        )}
+
                     </span>
 
                     ) : (
 
-                        <span className={styles.task_date}>
+                        <span data-testid="task_deadline" className={styles.task_date}>
                             {props.creation_date} / {props.end_date}
                         </span>
 
                     ) }
 
                     <div>
-                        <img src={user.profile_pic}/>
-                        <span>{user && user.username}</span>
+                        <img data-testid="profile_pic" src={user.profile_pic}/>
+                        <span data-testid="username">{user && user.username}</span>
                     </div>
                 </div>
 
 
-                <div ref={task_menu} className={styles.config} onClick={toggle_config_btn}>
+                <div data-testid="open_menu_btn" ref={task_menu} className={styles.config} onClick={toggle_menu_btn}>
                     <i className='bx bx-dots-vertical-rounded'></i>
                 </div>
 
                 {is_menu_open && (
-                    <div ref={config_container} className={styles.config_container}>
+                    <div ref={config_container} data-testid="task_menu" className={styles.config_container}>
                         <ul className={styles.config_btns}>
                             <li>
-                                <button onClick={() => setIsEditing(!is_editing)} className={styles.config_btn}>
+                                <button data-testid="open_edit_task_form_btn" onClick={() => setIsEditing(!is_editing)} className={styles.config_btn}>
                                     <i className='bx bxs-edit-alt'></i>
                                     Editar
                                 </button>

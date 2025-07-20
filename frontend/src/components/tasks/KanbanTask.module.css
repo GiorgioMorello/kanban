@@ -1,3 +1,4 @@
+
 .task {
     max-width: 30rem;
     margin: 0 auto;
@@ -63,7 +64,7 @@
 .config {
     position: absolute;
     top: 0;
-    right: -20px;
+    right: 0px;
     height: 23px;
     transition: 0.3s;
     border-radius: 5px;
@@ -139,4 +140,13 @@
 
 .check_btn:hover {
     background-color: transparent!important;
+}
+
+
+@media screen and (max-width: 800px){
+
+    .task {
+        max-width: 100%;
+    }
+
 }
