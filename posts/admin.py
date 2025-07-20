@@ -10,6 +10,8 @@ class TaskAdmin(admin.ModelAdmin):
 
     list_editable = ('task_status',)
 
+    list_filter = ('owner',)
+
 
 
 
