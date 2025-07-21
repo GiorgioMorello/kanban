@@ -31,7 +31,7 @@ services:
   backend:
     restart: unless-stopped
     build:
-      context: .  # 👈 agora o Docker enxerga tudo
+      context: ./backend  # 👈 agora o Docker enxerga tudo
       dockerfile: Dockerfile
 
     command: >
@@ -40,50 +40,50 @@ services:
              python manage.py runserver 0.0.0.0:8000"
 
     volumes:
-      - ".:/kanban_app"
-      - "./media:/kanban_app/media"
-      - "./static:/kanban_app/static"
+      - "./backend:/kanban_app"
+      - "./backend/media:/kanban_app/media"
+      - "./backend/static:/kanban_app/static"
 
     ports:
       - "8000:8000"
     depends_on:
       - db
     env_file:
-      - .env
+      - ./backend/.env
 
 
   celery:
     restart: unless-stopped
     build:
-      context: .
+      context: ./backend
 
     command: celery -A core worker --loglevel=info
     volumes:
-      - .:/kanban_app
+      - "./backend:/kanban_app"
 
     depends_on:
       - backend
       - db
 
     env_file:
-      - .env
+      - ./backend/.env
 
 
   celery-beat:
     restart: unless-stopped
     build:
-      context: .
+      context: ./backend
     command: celery -A core beat --loglevel=info
 
     volumes:
-      - .:/kanban_app
+      - "./backend:/kanban_app"
 
     depends_on:
       - backend
       - db
 
     env_file:
-      - .env
+      - ./backend/.env
 
 
   redis:
