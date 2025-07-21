@@ -104,23 +104,6 @@ class LoginSerializer(serializers.Serializer):
 
 
 
-    def validate(self, attrs):
-        super_validated = super().validate(attrs)
-
-
-
-        email = super_validated.get('email')
-        password = super_validated.get('password')
-
-
-        user = User.objects.filter(email=email).first()
-
-        if user and user.check_password(raw_password=password):
-            return super_validated
-
-        raise AuthenticationFailed(detail='E-mail ou Senha incorreto',)
-
-
 
 
 

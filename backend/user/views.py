@@ -22,6 +22,7 @@ from .utils.otp_token import generate_otp
 from .tasks import send_otp_to_user
 from django.conf import settings
 from .signals import send_otp_to_email
+import time
 
 User = get_user_model()
 
@@ -198,17 +199,27 @@ class OtpVerifyView(APIView):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_view(request):
+    start = time.time()
+    t1 = time.time()
     serializer = LoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
+
+    print("Serializer Val: ", time.time() - t1)
 
     email = serializer.validated_data['email']
     pwd = serializer.validated_data['password']
 
+    t2 = time.time()
     user = authenticate(request, email=email, password=pwd)
+    print("Ayth: ", time.time() - t2)
 
     if user is not None:
+        t3 = time.time() 
         resp = create_cookies(user, request)
+        
+        print("Create cookies: ", time.time() - t3)
 
+        print("Total: ", time.time() - start)
         return resp
 
 
@@ -226,10 +237,10 @@ def logout_view(request):
         token.blacklist()
 
         resp = Response()
-        resp.delete_cookie('refresh')
-        resp.delete_cookie('access')
-        resp.delete_cookie("X-CSRFToken")
-        resp.delete_cookie("csrftoken")
+        resp.delete_cookie('refresh', samesite="None", path="/")
+        resp.delete_cookie('access', samesite="None", path="/")
+        resp.delete_cookie("X-CSRFToken", samesite="None", path="/")
+        resp.delete_cookie("csrftoken", samesite="None", path="/")
         resp["X-CSRFToken"] = None
 
         resp.status_code = 204
