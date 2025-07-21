@@ -132,6 +132,7 @@ describe("KanbanBoard ", ()=> {
     });
 
 
+    // TODO: TESTAR CLOSE TASK EDIT FORM
 
     it("should render all input fields from task form", ()=>{
 
