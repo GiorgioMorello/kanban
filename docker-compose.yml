@@ -1,0 +1,97 @@
+services:
+
+  db:
+    image: mysql:8.3
+    restart: unless-stopped
+
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_DATABASE: kanban_db
+      MYSQL_ROOT_PASSWORD: password
+
+    volumes:
+          - db_data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+
+
+
+  frontend:
+    restart: unless-stopped
+    build:
+        context: ./frontend
+        dockerfile: Dockerfile
+
+    volumes:
+        - "./frontend:/frontend"
+
+    ports:
+        - "3000:80"
+
+  backend:
+    restart: unless-stopped
+    build:
+      context: .  # 👈 agora o Docker enxerga tudo
+      dockerfile: Dockerfile
+
+    command: >
+      sh -c "python manage.py migrate && 
+             python manage.py collectstatic --noinput &&
+             python manage.py runserver 0.0.0.0:8000"
+
+    volumes:
+      - ".:/kanban_app"
+      - "./media:/kanban_app/media"
+      - "./static:/kanban_app/static"
+
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+
+  celery:
+    restart: unless-stopped
+    build:
+      context: .
+
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - .:/kanban_app
+
+    depends_on:
+      - backend
+      - db
+
+    env_file:
+      - .env
+
+
+  celery-beat:
+    restart: unless-stopped
+    build:
+      context: .
+    command: celery -A core beat --loglevel=info
+
+    volumes:
+      - .:/kanban_app
+
+    depends_on:
+      - backend
+      - db
+
+    env_file:
+      - .env
+
+
+  redis:
+    restart: unless-stopped
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+# Monte o volume chamado db_data no caminho /var/lib/mysql dentro do container db.
+volumes:
+  db_data:
