@@ -226,10 +226,10 @@ def logout_view(request):
         token.blacklist()
 
         resp = Response()
-        resp.delete_cookie('refresh')
-        resp.delete_cookie('access')
-        resp.delete_cookie("X-CSRFToken")
-        resp.delete_cookie("csrftoken")
+        resp.delete_cookie('refresh', samesite="None", path="/")
+        resp.delete_cookie('access', samesite="None", path="/")
+        resp.delete_cookie("X-CSRFToken", samesite="None", path="/")
+        resp.delete_cookie("csrftoken", samesite="None", path="/")
         resp["X-CSRFToken"] = None
 
         resp.status_code = 204
