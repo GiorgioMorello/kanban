@@ -198,6 +198,7 @@ class OtpVerifyView(APIView):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@authentication_classes([])
 def login_view(request):
     serializer = LoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
