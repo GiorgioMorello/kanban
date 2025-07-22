@@ -1,5 +1,5 @@
 import datetime
-
+from cloudinary_storage.storage import MediaCloudinaryStorage
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
@@ -26,7 +26,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     full_name = models.CharField(max_length=150)
     bio = models.TextField(max_length=300, default='', null=True, blank=True)
-    profile_pic = models.ImageField(upload_to='profile_pic', default="profile_pic/default.jpg", blank=True, null=True)
+    profile_pic = models.ImageField(upload_to='profile_pic/', default='profile_pic/default_nsg6f7.jpg', blank=True, null=True, storage=MediaCloudinaryStorage)
     verified = models.BooleanField(default=False)
 
     def __str__(self):

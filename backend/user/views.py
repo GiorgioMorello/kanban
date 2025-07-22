@@ -312,11 +312,8 @@ class APIUserProfile(APIView):
         :return: Novos tokens JWT após a atualização bem-sucedida dos dados, com status HTTP 200.
         """
 
-        data = r.data.copy()
-        print("profile: ", r.FILES.get('profile_pic'))
-
+        data = r.data
         user_id = int(r.GET.get('user_id'))
-
 
         profile_data = {
             'profile_pic': r.FILES.get('profile_pic', None),
@@ -328,25 +325,17 @@ class APIUserProfile(APIView):
                 'email': data.get('email')
             }
 
-
         user = User.objects.get(id=user_id)
 
-
         profile_serializer = ProfileSerializer(instance=user.profile, data=profile_data, partial=True)
-
         profile_serializer.is_valid(raise_exception=True)
         profile_serializer.save()
-
-
 
         serializer = UserSerializer(instance=user, data=user_data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
         resp = create_cookies(user=user, request=r)
-
-        print(user.profile.profile_pic.url)
-
 
         return resp
 
