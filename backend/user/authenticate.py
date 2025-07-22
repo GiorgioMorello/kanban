@@ -26,7 +26,6 @@ class CustomAuthentication(jwt_authentication.JWTAuthentication):
             else:
                 raw_token = request.COOKIES.get('access')
 
-            print(raw_token)
             if not raw_token:
                 return None
 

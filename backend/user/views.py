@@ -199,31 +199,21 @@ class OtpVerifyView(APIView):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_view(request):
-    start = time.time()
-    t1 = time.time()
     serializer = LoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-
-    print("Serializer Val: ", time.time() - t1)
 
     email = serializer.validated_data['email']
     pwd = serializer.validated_data['password']
 
-    t2 = time.time()
     user = authenticate(request, email=email, password=pwd)
-    print("Ayth: ", time.time() - t2)
 
     if user is not None:
-        t3 = time.time() 
         resp = create_cookies(user, request)
-        
-        print("Create cookies: ", time.time() - t3)
 
-        print("Total: ", time.time() - start)
         return resp
 
 
-    return Response({"detail": "Usuário não ativo"}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"detail": "Usuário não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

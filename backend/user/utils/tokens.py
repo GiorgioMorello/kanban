@@ -46,7 +46,6 @@ def create_cookies(user, request):
     resp.data = tokens
     resp.status_code = 200
     resp['X-CSRFToken'] = csrf.get_token(request)
-    #print("CSRF - ", csrf.get_token(request))
 
 
     return resp
