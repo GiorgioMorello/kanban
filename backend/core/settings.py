@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'user',
     'django_celery_results',
     'django_celery_beat',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 
@@ -287,3 +289,10 @@ if 'test' in sys.argv or 'pytest' in sys.modules:
     CELERY_TASK_EAGER_PROPAGATES = True # Essa opção diz: se a task der erro, levante a exceção imediatamente.
 
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dffzbizs1',
+    'API_KEY': '486499558761776',
+    'API_SECRET': 'rl9HFVHG6HCuUgYW-sAsaSI87RI',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
