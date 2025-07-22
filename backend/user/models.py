@@ -37,10 +37,10 @@ class Profile(models.Model):
 class OtpToken(models.Model):
 
     user = models.OneToOneField(to=User, related_name='otp_token', on_delete=models.CASCADE)
-    otp_token = models.CharField(max_length=8, null=True, blank=True, default=None)
+    otp_token = models.CharField(max_length=8, null=True, blank=True, default=None, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     otp_expires_at = models.DateTimeField(null=True, blank=True, default=None)
-    url_code = models.CharField(max_length=60, null=True, blank=True, default=None)
+    url_code = models.CharField(max_length=60, null=True, blank=True, default=None, db_index=True)
 
 
     def __str__(self):
