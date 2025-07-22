@@ -289,10 +289,11 @@ if 'test' in sys.argv or 'pytest' in sys.modules:
     CELERY_TASK_EAGER_PROPAGATES = True # Essa opção diz: se a task der erro, levante a exceção imediatamente.
 
 
+# CLOUDINARY
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dffzbizs1',
-    'API_KEY': '486499558761776',
-    'API_SECRET': 'rl9HFVHG6HCuUgYW-sAsaSI87RI',
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
