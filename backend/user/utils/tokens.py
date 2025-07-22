@@ -5,6 +5,13 @@ from django.conf import settings
 from urllib.parse import urljoin
 
 
+
+
+def get_profile_pic(profile):
+    url = profile.profile_pic.url
+    resized_profile_pic_url = url.replace('/upload/', '/upload/w_300,h_300,c_fill,f_auto,q_auto/')
+    return resized_profile_pic_url
+
 def create_jwt_token(user):
     tokens = RefreshToken.for_user(user)
 
@@ -12,7 +19,11 @@ def create_jwt_token(user):
     tokens['username'] = user.username
     tokens['email'] = user.email
     tokens['bio'] = user.profile.bio
-    tokens['profile_pic'] = urljoin(settings.DOMAIN_NAME, user.profile.profile_pic.url)
+
+    tokens['profile_pic'] = get_profile_pic(user.profile)
+
+    #print("IMAGEM SALVA: ", urljoin(settings.DOMAIN_NAME, user.profile.profile_pic.url))
+
     tokens['verified'] = user.profile.verified
 
     #print(user.profile.profile_pic.url)
@@ -49,3 +60,6 @@ def create_cookies(user, request):
 
 
     return resp
+
+
+
