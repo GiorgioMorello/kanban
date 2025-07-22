@@ -2,7 +2,7 @@ from django.middleware import csrf
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
-
+from urllib.parse import urljoin
 
 
 def create_jwt_token(user):
@@ -12,7 +12,7 @@ def create_jwt_token(user):
     tokens['username'] = user.username
     tokens['email'] = user.email
     tokens['bio'] = user.profile.bio
-    tokens['profile_pic'] = settings.DOMAIN_NAME + user.profile.profile_pic.url
+    tokens['profile_pic'] = urljoin(settings.DOMAIN_NAME, user.profile.profile_pic.url)
     tokens['verified'] = user.profile.verified
 
     #print(user.profile.profile_pic.url)
