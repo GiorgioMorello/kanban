@@ -39,7 +39,7 @@ class Task(models.Model):
     end_date = models.DateField(
         null=True, default=None, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(User, related_name='tasks', default=None, null=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='tasks', default=None, null=True, on_delete=models.CASCADE, db_index=True)
 
     objects = TaskManager()
 
