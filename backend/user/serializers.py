@@ -122,21 +122,18 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
     def update(self, instance, validated_data):
-        profile_pic = validated_data.get('profile_pic', instance.profile_pic)
-        print(profile_pic)
+        profile_pic = validated_data.get('profile_pic')
+        full_name = validated_data.get('full_name')
 
-
-        full_name = validated_data.get('full_name', instance.full_name)
         if instance.full_name == full_name and instance.profile_pic == profile_pic:
             print('Não é necessário atualizar os dados')
             return instance
 
         instance.full_name = full_name
         if profile_pic is not None:
-            instance.profile_pic = validated_data.get('profile_pic')
+            instance.profile_pic = profile_pic
 
         instance.save()
-
 
         return instance
 
