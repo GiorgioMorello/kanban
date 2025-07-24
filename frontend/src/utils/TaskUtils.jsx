@@ -9,7 +9,7 @@ export default function TaskUtils(){
         let post_errors = [];
 
         if (title.length <= 1 || desc.length <= 1){
-            post_errors.push('Os campos de textos devem devem ter mais que um carácter')
+            post_errors.push('Os campos de textos devem devem ter mais que um caractere')
         }
 
         if (date < current_date){
