@@ -17,8 +17,7 @@ def custom_exception_handler(exc, context):
         response.data['status_code'] = response.status_code
         #print(isinstance(exc, AuthenticationFailed))
         if response.status_code == 401 and isinstance(exc, AuthenticationFailed):
-            print(exc.detail)
-            response.data['detail'] = exc.detail
+            response.data['detail'] = str(exc.detail)
 
 
 
