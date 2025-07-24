@@ -14,27 +14,18 @@ import Alert, { __mocked_send_alert as mockedSendAlert } from "../utils/Alert.js
 import MockTaskProvider from "../__mocks__/MockTaskProvider.jsx";
 import KanbanBoard from "../components/tasks/KanbanBoard.jsx";
 import MockAuthProvider from "../__mocks__/MockAuthProvider";
-import {request} from "axios";
 
 
-// Função auxiliar para configurar o mock do servidor para o endpoint de registrar usuário
-function server_use(body, status){
-    server.use(
-            http.post(`${baseURL}user/register/`, async () => {
-                return HttpResponse.json(body, status);
-            })
-        );
-}
 
 
-function fill_task_edit_form(){
+function fill_task_edit_form(title="Update task test", desc="Test", end_date="2025-08-16"){
     const task_title = screen.getByPlaceholderText(/digite o titulo da task/i);
     const task_dec = screen.getByPlaceholderText(/descrição da task/i);
     const task_end_date = screen.getByPlaceholderText(/data final/i);
 
-    fireEvent.change(task_title, { target: { value: "Update task test" }})
-    fireEvent.change(task_dec, { target: { value: "Test" }})
-    fireEvent.change(task_end_date, { target: { value: "2025-08-16"}})
+    fireEvent.change(task_title, { target: { value: title }})
+    fireEvent.change(task_dec, { target: { value: desc }})
+    fireEvent.change(task_end_date, { target: { value: end_date}})
 
 }
 
@@ -45,9 +36,14 @@ function open_task_menu(){
 
 
 
+afterEach(()=>{
+    cleanup();
+    server.resetHandlers()
+    vi.clearAllMocks()
 
+})
 
-describe("KanbanBoard ", ()=> {
+describe("KanbanTask test", ()=> {
 
 
     beforeEach(() => [
@@ -60,7 +56,6 @@ describe("KanbanBoard ", ()=> {
 
         )
     ]);
-
 
 
     it("renders all tasks", ()=>{
@@ -77,15 +72,13 @@ describe("KanbanBoard ", ()=> {
 
     it("should render task deadline", ()=>{
         const task_deadline = screen.getAllByTestId("task_deadline");
-
-        expect(task_deadline.length).toBe(2)
+        expect(task_deadline.length).toBe(1)
     });
 
 
     it("should render expired deadline warning if task is overdue and not done", ()=>{
-        const warning_span = screen.getByTestId("task_expired_warning");
-
-        expect(warning_span).toBeInTheDocument();
+        const warning_span = screen.getAllByTestId("task_expired_warning");
+        expect(warning_span.length).toBe(2);
     });
 
 
@@ -132,7 +125,25 @@ describe("KanbanBoard ", ()=> {
     });
 
 
-    // TODO: TESTAR CLOSE TASK EDIT FORM
+    it("closes the task edit form when clicking the close button", async ()=>{
+        open_task_menu();
+
+        // Abrir o formulário de editar a task
+        const open_edit_task_form_btn = screen.getByTestId("open_edit_task_form_btn");
+        fireEvent.click(open_edit_task_form_btn);
+
+        //Verificar se o botão está sendo exibido na página
+        const close_task_edit_form_btn = screen.getByTestId("close_task_edit_form_btn")
+        expect(close_task_edit_form_btn).toBeInTheDocument()
+
+        // Clicar no botão de fechar formulário de edição e verificar se o formulário foi removido do DOM
+        fireEvent.click(close_task_edit_form_btn);
+        const form = screen.queryByTestId("edit_task_form")
+        expect(form).not.toBeInTheDocument()
+
+    })
+
+
 
     it("should render all input fields from task form", ()=>{
 
@@ -150,7 +161,7 @@ describe("KanbanBoard ", ()=> {
     });
 
 
-    it("should send the correct body data to API", async ()=> {
+    it("sends correct task data to API when submitting the form", async ()=> {
         const updated_task = {
             "id": 1,
             "title": "Update task test",
@@ -186,7 +197,33 @@ describe("KanbanBoard ", ()=> {
             });
 
         });
+    });
+
+
+    it("displays an error message when the user submits invalid data while editing a task", async () => {
+        // server.use(
+        //     http.patch(`${baseURL}api/class/task/1`, async ({request}) => {
+        //         return HttpResponse.json(resp_error, {status: 400})
+        //     })
+        // );
+
+        open_task_menu();
+        fireEvent.click(screen.getByTestId("open_edit_task_form_btn"));
+
+        // Formulário com dois campos inválidos: title com menos de um caractere e o end_date ser anterior à data atual
+        fill_task_edit_form("s", "kjalkf", '2025-02-12');
+
+        fireEvent.click(screen.getByTestId("task_edit_form_btn"));
+
+        // Verificando se no DOM possui dois elementos de exibindo mensagem erro
+        expect(screen.getAllByTestId("edit_task_error").length).toBe(2);
     })
+
+
+
+
+
+
 
 
 })
