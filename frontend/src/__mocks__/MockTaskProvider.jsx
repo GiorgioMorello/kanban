@@ -18,7 +18,7 @@ export default function MockTaskProvider({children, todo_tasks=null, doing_tasks
         "description": "TEST",
         "task_status": "TO",
         "creation_date": "18-07-2025",
-        "end_date": "16-07-2025",
+        "end_date": "20-07-2025",
         "task_status_display": "DONE",
         "owner": 1
         }
