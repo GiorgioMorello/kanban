@@ -184,7 +184,7 @@ export default function KanbanTask({props, status_color}) {
             <div data-testid="task" className={styles.task} id='task' style={{borderLeft: `4px solid ${border_color}`}}>
 
                 {errors && errors.map((error) => (
-                    <span className='error_msg'>{error}</span>
+                    <span data-testid="edit_task_error" className='error_msg'>{error}</span>
                 ))}
 
                 <div className={styles.task_text}>
@@ -217,7 +217,7 @@ export default function KanbanTask({props, status_color}) {
 
                                             <i className='bx bx-check'></i>
                                         </button>
-                                        <button onClick={close_edit_field}>
+                                        <button data-testid="close_task_edit_form_btn" onClick={close_edit_field}>
                                             <i className='bx bx-x'></i>
                                         </button>
                                     </div>
