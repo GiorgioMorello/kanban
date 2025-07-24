@@ -33,7 +33,7 @@ export function TaskProvider({children}) {
 
             try {
                 //console.log(user)
-                const resp = await api.get(`api/class/task?user_id=${user && user.user_id}`);
+                const resp = await api.get(`api/class/task`);
                 //console.log(resp);
 
                 if (resp.status === 200) {

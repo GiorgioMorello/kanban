@@ -81,7 +81,7 @@ export default function ProfileForm(){
 
         console.log(form_data)
 
-        const resp = await axios_private_instance.patch(`user/edit-user/?user_id=${user.user_id}`, form_data,
+        const resp = await axios_private_instance.patch(`user/edit-user/`, form_data,
             {
                 headers: {
                     "Content-Type": "multipart/form-data"
