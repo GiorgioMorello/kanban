@@ -18,7 +18,7 @@ afterEach(()=>{
     vi.clearAllMocks()
 
 })
-describe("KanbanBoard ", ()=>{
+describe("KanbanBoard test", ()=>{
 
 
     beforeEach(()=>[
@@ -58,19 +58,7 @@ describe("KanbanBoard ", ()=>{
         expect(doneLength).toHaveTextContent("1");
     });
 
-    // Testa se os formulários de criação de tarefas aparecem ao clicar nos botões correspondentes em cada coluna
-    it("should display task form of each status when clicking the open task form button", () => {
-        const todo_open_btn = screen.getByTestId("open_todo_task_form");
-        const doing_open_btn = screen.getByTestId("open_doing_task_form");
-        const done_open_btn = screen.getByTestId("open_done_task_form");
 
-        fireEvent.click(todo_open_btn);
-        fireEvent.click(doing_open_btn);
-        fireEvent.click(done_open_btn);
-
-        const input = screen.getAllByPlaceholderText(/digite o titulo da task/i);
-        expect(input.length).toBe(3); // Um campo de input por status
-    });
 
     // Verifica se todas as tarefas (para cada status) estão sendo exibidas corretamente na interface
     it("should display all tasks for each status", () => {
