@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.db.models import Q
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.exceptions import NotFound, AuthenticationFailed
-from rest_framework_simplejwt.exceptions import InvalidToken
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 from .models import Profile, OtpToken
@@ -16,7 +16,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework import status
+from rest_framework import status, serializers
 from .utils.tokens import create_jwt_token, create_cookies
 from .utils.otp_token import generate_otp
 from .tasks import send_otp_to_user
@@ -36,39 +36,38 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 class CookieTokenRefreshSerializer(TokenRefreshSerializer):
-    refresh = None
-
+    refresh = serializers.CharField(required=False, allow_blank=True)
 
     def validate(self, attrs):
-        attrs['refresh'] = self.context["request"].COOKIES.get('refresh')
+        refresh_token = self.context["request"].COOKIES.get('refresh')
 
-        if attrs['refresh']:
-            return super().validate(attrs)
+        if not refresh_token:
+            raise ValidationError({'detail': 'Refresh token ausente.'})
 
-        else:
-            raise InvalidToken(detail="Refresh Token inválido")
+        attrs['refresh'] = refresh_token
+        return super().validate(attrs)
 
 
 class CookieRefreshView(TokenRefreshView):
     serializer_class = CookieTokenRefreshSerializer
 
-
-
     def finalize_response(self, request, response, *args, **kwargs):
 
-        if response.data.get('refresh'):
+        if isinstance(response.data, dict) and response.data.get('refresh'):
             response.set_cookie(
                 key='refresh',
-                value=response.data.get('refresh'),
+                value=response.data['refresh'],
                 expires=settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'],
                 secure=False,
                 httponly=True,
                 samesite="Lax"
             )
-
             del response.data['refresh']
 
-        response["X-CSRFToken"] = request.COOKIES.get("csrftoken")
+        # Copia CSRF token do cookie original
+        csrf_token = request.COOKIES.get("csrftoken")
+        if csrf_token:
+            response["X-CSRFToken"] = csrf_token
 
         return super().finalize_response(request, response, *args, **kwargs)
 
@@ -213,8 +212,7 @@ def login_view(request):
 
         return resp
 
-
-    return Response({"detail": "Usuário não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"detail": "Usuário não encontrado"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 
@@ -313,12 +311,12 @@ class APIUserProfile(APIView):
         :return: Novos tokens JWT após a atualização bem-sucedida dos dados, com status HTTP 200.
         """
 
-        data = r.data
-        user_id = int(r.GET.get('user_id'))
+        data = r.data.dict()
+        user_id = r.user.id
 
         profile_data = {
             'profile_pic': r.FILES.get('profile_pic', None),
-            'full_name': data.pop('full_name')[0],
+            'full_name': data.pop('full_name'),
         }
 
         user_data = {
