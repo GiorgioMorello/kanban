@@ -12,11 +12,12 @@ def get_profile_pic(profile):
     cloudinary_base_url = config('CLOUDINARY_PROFILE_PIC_URL',
                                  default='https://res.cloudinary.com/your-cloud-name/image/upload/')
 
-    default_pic_url = cloudinary_base_url + 'default.jpg' if is_using_cloudinary \
+    default_pic_url = cloudinary_base_url + 'media/profile_pic/default.jpg' if is_using_cloudinary \
         else '/media/profile_pic/default.jpg'
 
     try:
         url = profile.profile_pic.url
+        
     except Exception as e:
         print(e)
         url = default_pic_url

@@ -206,10 +206,10 @@ def login_view(request):
     pwd = serializer.validated_data['password']
 
     user = authenticate(request, email=email, password=pwd)
-
+    
     if user is not None:
         resp = create_cookies(user, request)
-
+        
         return resp
 
     return Response({"detail": "Usuário não encontrado"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -274,7 +274,7 @@ class APIListCreate(APIView):
             send_otp_to_email(instance=user_not_active)
             return Response(data={'url_code': user_not_active.otp_token.url_code}, status=status.HTTP_201_CREATED)
 
-
+        
         user = RegisterSerializer(data=data)
 
         user.is_valid(raise_exception=True)
