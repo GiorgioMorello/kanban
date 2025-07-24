@@ -56,37 +56,25 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
 
         if (!is_valid) return false
 
-
-        const task_data = {
-            title,
-            description: desc,
-            task_status,
-            end_date: date,
-            owner: user.user_id,
-        }
-
-
+        console.log(date, title, desc);
 
         const resp = await axios_private_instance.post('api/class/task', {
             title,
             description: desc,
             task_status,
-            end_date: date,
-            owner: user.user_id,
+            end_date: date
         });
+
         if(resp.status === 201){
             const data = resp.data;
             setIsTasksChanged(data)
-
 
             setDesc("")
             setTitle("");
             setDate("");
             setErrors([]);
 
-
-            title_ref.current.focus()
-
+            title_ref.current?.focus()
         }
 
     }
@@ -95,9 +83,8 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
 
 
     useEffect(() => {
-        if (title_ref.current) {
-            title_ref.current.focus(); // Chama o focus após o render
-        }
+        title_ref.current?.focus(); // Chama o focus após o render
+
     }, [is_open_btn]);
 
 
@@ -105,7 +92,7 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
 
         <>
 
-            <form onSubmit={handle_submit}>
+            <form data-testid={"task_form"} onSubmit={handle_submit}>
 
                 <div className={styles.task_input} id='task' style={{borderLeft: `4px solid ${border_color}`}}>
                     {errors && errors.map((error, id) => (
@@ -113,10 +100,10 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
                     ))}
                     <div className='task_text'>
                         {/* Titulo e Descrição */}
-                        <Input value={title && title} input_ref={title_ref} type='text'
+                        <Input data_testid={"task_form_title_input"} value={title && title}  type='text'
                                handle_on_change={(e) => setTitle(e.target.value)} placeholder='Digite o titulo da Task'
-                               name='title' required={true}/>
-                        <textarea value={desc && desc} placeholder='Descrição da Task'
+                               name='title' required={true} ref={title_ref}/>
+                        <textarea data-testid={"task_form_description_input"} value={desc && desc} placeholder='Descrição da Task'
                                   onChange={(e) => setDesc(e.target.value)}>
                         </textarea>
 
@@ -126,7 +113,7 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
                     <div className={styles.task_owner_info}>
                                         <div className='task_date'>
                                             {/* End date */}
-                                            <Input handle_on_change={date_on_change} name='date' label_text='Data Final'
+                                            <Input data_testid={"task_form_deadline_input"} handle_on_change={date_on_change} name='date' label_text='Data Final'
                                                    placeholder='Data final' value={date} type='date'/>
                                         </div>
                         <div>
@@ -134,10 +121,10 @@ export default function TaskForm({open_task_form, is_open_btn, status_color, tas
                     </div>
 
                     <div className='form_btns'>
-                        <button type='submit'>
+                        <button data-testid={"submit_btn"} type='submit'>
                             <i className='bx bx-check'></i>
                         </button>
-                        <button onClick={open_task_form}>
+                        <button data-testid={"close_form_btn"} onClick={open_task_form}>
                             <i className='bx bx-x'></i>
                         </button>
                     </div>
