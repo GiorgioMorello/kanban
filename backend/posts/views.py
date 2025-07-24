@@ -30,8 +30,7 @@ class APIListTask(APIView):
             :param r: Objeto da requisição HTTP contendo o parâmetro 'user_id' na query string.
             :return: Lista de tarefas serializadas pertencentes ao usuário informado, com status HTTP 200.
         """
-        user_id = r.GET.get('user_id')
-        print(user_id)
+        user_id = r.user.id
         tasks = Task.objects.get_sorted_tasks(user_id=user_id)
 
         serializer = TaskSerializer(instance=tasks, many=True)
@@ -47,14 +46,13 @@ class APIListTask(APIView):
             description: str,
             task_status: str,
             end_date: "2025-01-27",
-            owner: user id
 
             :param r: Objeto da requisição HTTP contendo os dados da nova tarefa no corpo (JSON).
             :return: Dados da tarefa recém-criada, serializados.
         """
         serializer = TaskSerializer(data=r.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(owner=r.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
