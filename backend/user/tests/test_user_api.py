@@ -5,8 +5,8 @@ from django.urls import reverse, resolve
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.utils import timezone
-from user import views as user_views
-from user.models import User, Profile, OtpToken
+from .. import views as user_views
+from ..models import User, Profile, OtpToken
 from ..utils.otp_token import generate_otp
 from unittest.mock import patch
 
@@ -298,7 +298,7 @@ class TestLoginView(TestAPI):
 
         self.assertEqual(resp.status_code, 401)
 
-        self.assertEqual(resp.data['detail'], 'E-mail ou Senha incorreto')
+        self.assertEqual(resp.data['detail'], 'Usuário não encontrado')
 
 
 
