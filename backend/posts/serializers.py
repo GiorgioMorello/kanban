@@ -31,7 +31,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     creation_date = serializers.DateTimeField(format='%d-%m-%Y', read_only=True)
     end_date = serializers.DateField(format='%d-%m-%Y', error_messages={'required': 'Esse campo não pode ser vazio'})
-    owner = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=True)
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
 
 
 
@@ -51,6 +51,18 @@ class TaskSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(['Digite um titulo maior que 1 caractere'])
 
         print('Validate title', value)
+        return value
+
+    def validate_description(self, value):
+        if len(value) <= 1:
+            raise serializers.ValidationError(['Digite um titulo maior que 1 caractere'])
+
+        print('Validate desc', value)
+        return value
+
+
+    def validated_end_date(self, value):
+        print(value)
         return value
 
 
