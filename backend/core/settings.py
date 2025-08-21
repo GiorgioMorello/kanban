@@ -132,7 +132,7 @@ USE_TZ = True
 
 
 
-DOMAIN_NAME = config('DOMAIN_NAME')
+DOMAIN_NAME = config('SERVER_SIDE_DOMAIN')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
