@@ -1,6 +1,5 @@
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.views import exception_handler, APIView
-from ..views import MyTokenObtainPairView
 
 
 
