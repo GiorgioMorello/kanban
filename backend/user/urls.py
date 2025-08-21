@@ -8,7 +8,6 @@ app_name = 'user_app'
 
 
 urlpatterns = [
-    path('token/', views.MyTokenObtainPairView.as_view(), name='create_jwt_toke'),
     path('token/refresh/', views.CookieRefreshView.as_view(), name='refresh_jwt_token'),
 
     path('register/', views.APIListCreate.as_view(), name='register_user'),

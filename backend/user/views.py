@@ -10,7 +10,7 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 from .models import Profile, OtpToken
 from django.contrib.auth import get_user_model, authenticate
-from .serializers import UserSerializer, RegisterSerializer, TokenObtain, ProfileSerializer, OtpSerializer, LoginSerializer
+from .serializers import UserSerializer, RegisterSerializer, ProfileSerializer, OtpSerializer, LoginSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
@@ -26,12 +26,6 @@ import time
 
 User = get_user_model()
 
-
-
-# GET JWT token
-class MyTokenObtainPairView(TokenObtainPairView):
-
-    serializer_class = TokenObtain
 
 
 

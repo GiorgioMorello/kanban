@@ -1,12 +1,11 @@
-from collections import defaultdict
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError, AuthenticationFailed
-from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from django.conf import settings
 from .models import Profile, OtpToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.tokens import AccessToken
+
 
 User = get_user_model()
 
@@ -18,20 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'first_name')
 
-
-class TokenObtain(TokenObtainPairSerializer):
-
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        token['full_name'] = user.profile.full_name
-        token['username'] = user.username
-        token['email'] = user.email
-        token['bio'] = user.profile.bio
-        token['profile_pic'] = settings.DOMAIN_NAME + user.profile.profile_pic.url
-        token['verified'] = user.profile.verified
-
-        return token
 
 
 class RegisterSerializer(serializers.ModelSerializer):
