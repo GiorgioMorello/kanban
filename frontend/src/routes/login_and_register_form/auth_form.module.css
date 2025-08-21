@@ -1,7 +1,9 @@
 
 
+
+
 .register_container {
-    min-height: calc(100vh - 74px);
+    min-height: 100vh;
     width: 100vw;
     background-color: var(--main_bg);
     display: grid;
@@ -9,10 +11,7 @@
 }
 
 .form_container {
-
     place-self: center;
-
-    padding-right: 2rem;
     background-color: var(--second_color);
     max-width: 80rem;
     max-height: 60rem;
@@ -25,16 +24,18 @@
 
 
 
+
+
 .img_side_form {
     width: 100%;
     display: flex;
-    gap: 0.8rem;
+    /*gap: 0.8rem;*/
     height: 100%;
 
 }
 
 .side_img {
-    flex-basis: 350px;
+    flex-basis: 35rem;
     background-image: url("/register_task_bg.webp");
     background-repeat: no-repeat;
     background-size: cover;
@@ -45,8 +46,9 @@
 
 .register_form {
     padding: 2rem;
-    flex-basis: 400px;
-
+    flex-basis: 45rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    border-radius: 0 10px 10px 0;
 
 }
 
@@ -81,4 +83,32 @@
 
 .useful_links a {
     display: inline-block;
+}
+
+
+
+@media screen and (max-width: 600px) {
+    .side_img {
+        flex-basis: 0;
+    }
+
+
+    .register_container {
+        background-color: var(--second_color);
+    }
+
+    .img_side_form {
+        padding: 5rem;
+    }
+
+    .register_form {
+        border-radius: 10px;
+    }
+
+
+    .form_container {
+
+        max-height: none;
+        height: auto;
+    }
 }

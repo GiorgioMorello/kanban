@@ -12,6 +12,7 @@ import Alert from "../../utils/Alert.jsx";
 import styles from './ProfileForm.module.css'
 import Input from "../input/Input.jsx";
 import {axios_private_instance} from "../../axios/Index.jsx";
+import SubmitButton from "../input/SubmitButton.jsx";
 
 
 
@@ -27,6 +28,8 @@ export default function ProfileForm(){
     const [profile_pic, setProfilePic] = useState(user && user.profile_pic);
     const [remove_pic, setRemovePic] = useState(false);
     const [preview_img, setPreviewImg] = useState(null);
+    const [disableSubmit, setDisableSubmit] = useState(false);
+    const [error, setError] = useState("");
 
 
     // Hooks
@@ -72,6 +75,7 @@ export default function ProfileForm(){
 
     async function handle_profile_submit(e){
         const form_data = new FormData();
+
         e.preventDefault();
         form_data.append('full_name', full_name)
         form_data.append('username', username)
@@ -79,26 +83,35 @@ export default function ProfileForm(){
 
         if (preview_img) form_data.append('profile_pic', profile_pic);
 
-        console.log(form_data)
+        setDisableSubmit(true);
 
-        const resp = await axios_private_instance.patch(`user/edit-user/`, form_data,
+        try {
+            const resp = await axios_private_instance.patch(`user/edit-user/`, form_data,
             {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             });
 
-        if (resp.status === 200){
-            const data = resp.data;
-            setUser(jwtDecode(data.access));
-            setAccessToken(data.access)
-            setProfilePic(data.profile_pic);
+            if (resp.status === 200){
+                const data = resp.data;
+                setUser(jwtDecode(data.access));
+                setAccessToken(data.access)
+                setProfilePic(data.profile_pic);
 
-            navigate('/dashboard');
-            send_alert("Perfil atualizado", "success")
+                navigate('/dashboard');
+                send_alert("Perfil atualizado", "success")
 
-
+            }
         }
+        catch (e) {
+            setError("Não foi possivel atualizar seu perfil")
+        }
+
+        finally {
+            setDisableSubmit(false)
+        }
+
 
 
 
@@ -143,7 +156,10 @@ export default function ProfileForm(){
                 </div>
 
 
-                <button className='submit_btn' type='submit'>Salvar</button>
+                <SubmitButton disable_submit={disableSubmit} data_testid='profile_form_submit_btn' />
+
+                {error && <span className='error_msg'>{error}</span>}
+
 
             </div>
 

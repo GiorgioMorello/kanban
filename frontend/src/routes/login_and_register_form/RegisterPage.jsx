@@ -14,6 +14,7 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 import styles from './auth_form.module.css'
 import {axios_instance} from "../../axios/Index.jsx";
 import Alert from '../../utils/Alert.jsx'
+import SubmitButton from "../../components/input/SubmitButton.jsx";
 
 
 export default function RegisterPage() {
@@ -22,8 +23,8 @@ export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password_2, setPassword_2] = useState('');
-    const [error, setError] = useState({});
-    const [disable_submit, setDisableSubmit] = useState(false);
+    const [error, setError] = useState(null);
+    const [disableSubmit, setDisableSubmit] = useState(false);
 
     const navigate = useNavigate();
 
@@ -71,6 +72,9 @@ export default function RegisterPage() {
             if (resp) {
                 setError(resp.data);
             }
+            else {
+                setError('Não foi possivel criar a conta')
+            }
         }
         finally {
             setDisableSubmit(false)
@@ -79,9 +83,7 @@ export default function RegisterPage() {
 
     }
 
-    useEffect(() => {
-        setError({})
-    }, [location.pathname])
+
 
 
     return (
@@ -107,7 +109,7 @@ export default function RegisterPage() {
 
 
 
-                            {error.username && <span className='error_msg'>{error.username}</span>}
+                            {error?.username && <span className='error_msg'>{error.username}</span>}
                             <Input name='username' type='text' required={true} label_text='Nome de usuário'
                                    placeholder='Digite seu nome de usuário' handle_on_change={handle_username}/>
                         </div>
@@ -116,14 +118,14 @@ export default function RegisterPage() {
                         <div className={styles.field_group}>
 
 
-                            {error.email && <span className='error_msg'>{error.email}</span>}
+                            {error?.email && <span className='error_msg'>{error.email[0]}</span>}
                             <Input name='email' type='email' required={true} label_text='E-mail'
                                    placeholder='Digite seu E-mail' handle_on_change={handle_email}/>
                         </div>
 
 
                         <div className={styles.field_group}>
-                            {error.password && <span className='error_msg'>{error.password}</span>}
+                            {error?.password && <span className='error_msg'>{error.password}</span>}
                             <Input name='password' type='password' required={true} label_text='Senha'
                                    placeholder='Digite sua senha' handle_on_change={handle_password}/>
                         </div>
@@ -133,10 +135,9 @@ export default function RegisterPage() {
                                    placeholder='Digite sua senha novamente' handle_on_change={handle_password_2}/>
                         </div>
 
+                        {error && typeof(error) === 'string' && <span className='error_msg'>{error}</span>}
 
-                        <input data-testid={'register_form_submit_btn'} disabled={disable_submit} className='submit_btn' type='submit' value='Enviar'/>
-
-
+                        <SubmitButton disable_submit={disableSubmit} data_testid='register_form_submit_btn' />
 
                         <div className={styles.useful_links}>
                             <span>Já possui uma conta? </span><Link to='/login'> Faça login aqui</Link>

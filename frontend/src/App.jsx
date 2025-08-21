@@ -17,7 +17,7 @@ function App() {
 
 
 
-        <NavBar />
+        {/*<NavBar />*/}
 
           <TaskProvider>
               <Outlet />

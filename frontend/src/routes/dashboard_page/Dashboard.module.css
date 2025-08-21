@@ -6,9 +6,55 @@
     border-top-left-radius: 5px;
 }
 
-.title {
-    padding: 2rem 0;
+
+.nav_bg {
+    background-color: var(--nav_bg);
+
+}
+
+.nav_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem
 }
 
 
+.logo {
+    width: 5rem;
+}
+
+.logo img {
+    border-radius: 15px;
+}
+
+
+.nav_links {
+    display: flex;
+    gap: 1rem;
+}
+
+
+.logout_btn {
+    border: none;
+    font-size: 1.6rem;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+}
+
+
+.nav_links li a, .logout_btn {
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    color: #999;
+    transition: 0.3s;
+}
+
+
+.nav_links li a:hover, .logout_btn:hover {
+    background-color: var(--second_color);
+    color: var(--primary_color)
+}
 

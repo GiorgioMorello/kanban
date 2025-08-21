@@ -1,5 +1,5 @@
 .task_input {
-    max-width: 30rem;
+    max-width: var(--task_width);
     margin: 0 auto;
     width: 100%;
     padding: 0 0.5rem;

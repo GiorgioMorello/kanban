@@ -7,6 +7,7 @@ import {AuthContext} from "../context/AuthContext.jsx";
 
 // Compontents
 import ProfileForm from "../components/profile/ProfileForm.jsx";
+import DashboardNavBar from "../components/navbar/DashboardNavBar";
 
 
 
@@ -19,10 +20,15 @@ export default function Profile(){
 
 
     return (
-        <div className='wrapper'>
 
-            <ProfileForm />
+        <>
+            <DashboardNavBar />
+            <div className='wrapper'>
 
-        </div>
+                <ProfileForm />
+
+            </div>
+        </>
+
     )
 }

@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import Input from '../../components/input/Input.jsx';
+import SubmitButton from '../../components/input/SubmitButton.jsx';
 import styles from './auth_form.module.css';
 import {Link, useNavigate} from 'react-router-dom';
 import {AuthContext} from "../../context/AuthContext.jsx";
@@ -13,7 +14,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const {setAccessToken, setUser, setCsrfToken, accessToken, user} = useContext(AuthContext);
     const [error, setError] = useState("");
-    const [disable_submit, setDisableSubmit] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState(false);
 
 
     const navigate = useNavigate()
@@ -59,6 +60,8 @@ export default function LoginPage() {
             if(resp) {
                 setError(resp.data.detail);
                 // console.log(resp.data.detail)
+            } else {
+                setError('Não foi possivel fazer login')
             }
         }
 
@@ -93,8 +96,7 @@ export default function LoginPage() {
 
                     <form data-testid={'login_form'} onSubmit={handle_submit} className={styles.register_form}>
                         <div className='form_title'>
-                            <h2 data-testid={'login_page_title'}>Faça log-in para entrar</h2>
-                            <p>Seja bem vindo</p>
+                            <p data-testid={'login_page_title'}>log-in</p>
                         </div>
 
 
@@ -110,11 +112,10 @@ export default function LoginPage() {
 
                         {error && <span className='error_msg'>{error}</span>}
 
-
-                        <input disabled={disable_submit} data-testid={'login_form_submit_btn'} className='submit_btn' type='submit' value='Enviar'/>
+                        <SubmitButton disable_submit={disableSubmit} data_testid='login_form_submit_btn' />
 
                         <div className={styles.useful_links}>
-                            <span>Não possui uma conta? Crie </span><Link to='/register'> aqui</Link>
+                            <span>Não possui uma conta? </span><Link to='/register'> Crie aqui</Link>
                         </div>
                     </form>
 
