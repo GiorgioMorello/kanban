@@ -12,7 +12,7 @@ services:
     volumes:
           - db_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
 
 
 
@@ -35,7 +35,9 @@ services:
       dockerfile: Dockerfile
 
     command: >
-      sh -c "python manage.py migrate && 
+      sh -c "
+             python manage.py makemigrations &&
+             python manage.py migrate && 
              python manage.py collectstatic --noinput &&
              python manage.py runserver 0.0.0.0:8000"
 
@@ -58,8 +60,6 @@ services:
       context: ./backend
 
     command: celery -A core worker --loglevel=info
-    volumes:
-      - "./backend:/kanban_app"
 
     depends_on:
       - backend
@@ -74,9 +74,6 @@ services:
     build:
       context: ./backend
     command: celery -A core beat --loglevel=info
-
-    volumes:
-      - "./backend:/kanban_app"
 
     depends_on:
       - backend
