@@ -79,7 +79,7 @@ ALLOWED_HOSTS=127.0.0.1
 
 
 # CELERY
-CELERY_BROKER_URL=redis://127.0.0.1:6379/0
+CELERY_BROKER_URL=redis://redis:6379/0
 
 
 # E-MAIL
@@ -92,7 +92,7 @@ EMAIL_USE_TLS=True
 EMAIL_USE_SSL=False
 
 
-# MySQL (precisam ser iguais ao .env que está na razi)
+# MySQL (precisam ser iguais ao .env que está na raiz)
 USE_MYSQL=1
 DB_HOST=db
 DB_NAME=kanban_db
