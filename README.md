@@ -112,7 +112,7 @@ cp frontend/.env.example frontend/.env
 VITE_API_URL=http://127.0.0.1:8000
 ```
 
-#### ▶️ 3. Inicie os containers com Docker Compose
+#### ▶️ 4. Inicie os containers com Docker Compose
 ```bash
 docker-compose up --build -d
 ```
