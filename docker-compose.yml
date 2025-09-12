@@ -6,8 +6,10 @@ services:
 
     environment:
       TZ: America/Sao_Paulo
-      MYSQL_DATABASE: kanban_db
-      MYSQL_ROOT_PASSWORD: your_password
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
     volumes:
           - db_data:/var/lib/mysql
