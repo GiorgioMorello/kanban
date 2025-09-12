@@ -1,4 +1,4 @@
-# /backend/Dockerfile
+#/backend/Dockerfile
 
 FROM python:3.11
 
@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /kanban_app
 
 # Instalar dependências do sistema (libmariadb-dev)
-RUN apt update && apt install -y \
+RUN apt update && apt install -y netcat-openbsd \
     libmariadb-dev \
     gcc \
     default-libmysqlclient-dev \
