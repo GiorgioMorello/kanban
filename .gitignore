@@ -62,13 +62,6 @@ db.sqlite3
 db.sqlite3-journal
 static
 
-# Ignorar arquivos de migração do Django
-backend/**/migrations/*.py
-
-# Mas continuar permitindo __init__.py
-!backend/**/migrations/__init__.py
-
-
 
 # Flask stuff:
 instance/
