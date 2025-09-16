@@ -10,7 +10,7 @@ export default function Home(){
             <div data-testid={'home-bg'} className={styles.home_bg}>
                 <div className={styles.home_container}>
                     <div className={styles.home_text}>
-                       <h1 data-testid={'homepage-tile'}>Bem-vindo ao TaskFlow</h1>
+                       <h1 data-testid={'homepage-tile'}>Bem-vindo ao TaskBoard</h1>
                         <p data-testid={'homepage-desc'}> Organize seu dia com quadros Kanban de forma simples e rápido.</p>
                     </div>
 

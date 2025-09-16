@@ -100,7 +100,7 @@ export default function RegisterPage() {
 
                     <form data-testid={'register_form'} onSubmit={handle_submit} className={styles.register_form}>
                         <div className='form_title'>
-                            <h2 data-testid={'register_page_title'} >Bem vindo ao HelpTask</h2>
+                            <h2 data-testid={'register_page_title'} >Bem vindo ao TaskBoard</h2>
                             <p>Criar conta</p>
                         </div>
 
