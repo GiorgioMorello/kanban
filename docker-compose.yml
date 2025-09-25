@@ -33,7 +33,7 @@ services:
   backend:
     restart: unless-stopped
     build:
-      context: ./backend  # 👈 agora o Docker enxerga tudo
+      context: ./backend 
       dockerfile: Dockerfile
 
     command: >
