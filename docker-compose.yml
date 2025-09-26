@@ -6,10 +6,9 @@ services:
 
     environment:
       TZ: America/Sao_Paulo
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+    env_file:
+      - backend/.env
 
     volumes:
           - db_data:/var/lib/mysql
@@ -33,7 +32,7 @@ services:
   backend:
     restart: unless-stopped
     build:
-      context: ./backend  # 👈 agora o Docker enxerga tudo
+      context: ./backend 
       dockerfile: Dockerfile
 
     command: >
