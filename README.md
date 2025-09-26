@@ -48,22 +48,7 @@ cd kanban
 
 ### ⚙️ Configurando as variáveis de ambiente
 
-#### 1. Crie o arquivo .env na raiz do projeto:
-```bash
-cp .env.example .env
-```
-
-Configure as variáveis da sua maneira
-
-```bash
-DB_NAME=kanban_db
-DB_USER=user
-DB_PASS=teste1234
-DB_PORT=3306
-MYSQL_ROOT_PASSWORD=teste1234
-```
-
-#### 2. Crie o arquivo .env no diretório backend/
+#### 1. Crie o arquivo .env no diretório backend/
 ```bash
 cp backend/.env.example backend/.env
 ```
@@ -92,15 +77,17 @@ EMAIL_USE_TLS=True
 EMAIL_USE_SSL=False
 
 
-# MySQL (precisam ser iguais ao .env que está na raiz)
+# MySQL
 USE_MYSQL=1
-DB_HOST=db
-DB_NAME=kanban_db
-DB_USER=your_username
-DB_PASS=your_password
-DB_PORT=3306
+MYSQL_HOST=db
+MYSQL_DATABASE=kanban_db
+MYSQL_USER=your_username
+MYSQL_PASSWORD=your_password
+MYSQL_PORT=3306
+MYSQL_ROOT_PASSWORD=your_root_password
+
 ```
-#### 3. Crie o arquivo .env no diretório frontend/:
+#### 2. Crie o arquivo .env no diretório frontend/:
 
 
 ```bash
@@ -112,7 +99,7 @@ cp frontend/.env.example frontend/.env
 VITE_API_URL=http://127.0.0.1:8000
 ```
 
-#### ▶️ 4. Inicie os containers com Docker Compose
+#### ▶️ 3. Inicie os containers com Docker Compose
 ```bash
 docker-compose up --build -d
 ```
